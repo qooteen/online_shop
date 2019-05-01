@@ -1,64 +1,56 @@
 package com.project.online_shop.dao;
 
+import com.project.online_shop.bl.HibernateSessionFactory;
 import com.project.online_shop.entity.Users;
-import org.hibernate.QueryException;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
+import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class UsersDAOImpl implements UsersDAO {
+
     @Override
-    public void add(Users users) throws QueryException {
-        Session session = getSession();
+    public Users findById(Long id) {
+        return HibernateSessionFactory.getSessionFactory().openSession().get(Users.class, id);
+    }
+
+    @Override
+    public List<Users> findAll() {
+        List<Users> users = (List<Users>) HibernateSessionFactory.getSessionFactory().openSession().createQuery("FROM users").list();
+        return users;
+    }
+
+    @Override
+    public void save(Users users) {
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+
         session.save(users);
-        closeTransactionSesstion();
-    }
 
-    @Override
-    public List<Users> getAll() {
-        openTransactionSession();
-
-        String sql = "SELECT * FROM users";
-        Session session = getSession();
-        Query query = session.createNativeQuery(sql).addEntity(Users.class);
-        List<Users> users = query.list();
-
-        closeTransactionSesstion();
-
-        return users;
-    }
-
-    @Override
-    public Users getById(Long id) {
-        openTransactionSession();
-
-        String sql = "SELECT * FROM users WHERE user_id = :id";
-        Session session = getSession();
-        Query query = session.createNativeQuery(sql).addEntity(Users.class);
-        query.setParameter("id", id);
-
-        Users users = (Users)query.getSingleResult();
-
-        closeTransactionSesstion();
-
-        return users;
+        transaction.commit();
+        session.close();
     }
 
     @Override
     public void update(Users users) {
-        openTransactionSession();
-        Session session = getSession();
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+
         session.update(users);
-        closeTransactionSesstion();
+
+        transaction.commit();
+        session.close();
     }
 
     @Override
     public void remove(Users users) {
-        openTransactionSession();
-        Session session = getSession();
-        session.remove(users);
-        closeTransactionSesstion();
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+
+        session.delete(users);
+
+        transaction.commit();
+        session.close();
     }
 }

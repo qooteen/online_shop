@@ -1,18 +1,21 @@
 package com.project.online_shop.dao;
 
 import com.project.online_shop.entity.Users;
+import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.util.List;
 
+@Repository
 public interface UsersDAO {
-    void add(Users users) throws SQLException;
 
-    List<Users> getAll() throws SQLException;
+    Users findById(Long id) throws SQLException;
 
-    Users getById(Long id) throws SQLException;
+    void save(Users users) throws SQLException;
 
     void update(Users users) throws SQLException;
 
     void remove(Users users) throws SQLException;
+
+    List<Users> findAll() throws SQLException;
 }

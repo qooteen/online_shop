@@ -13,14 +13,5 @@
         <property name="show_sql">true</property> <!-- Show SQL in console -->
         <property name="format_sql">true</property> <!-- Show SQL formatted -->
 
-        <mapping class="com.project.online_shop.entity.Category"/>
-        <mapping class="com.project.online_shop.entity.Discounts"/>
-        <mapping class="com.project.online_shop.entity.Manufacturers"/>
-        <mapping class="com.project.online_shop.entity.Orders"/>
-        <mapping class="com.project.online_shop.entity.Products"/>
-        <mapping class="com.project.online_shop.entity.Products_images"/>
-        <mapping class="com.project.online_shop.entity.Products_properties"/>
-        <mapping class="com.project.online_shop.entity.Roles"/>
-        <mapping class="com.project.online_shop.entity.Users"/>
     </session-factory>
 </hibernate-configuration>

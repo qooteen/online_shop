@@ -1,15 +1,14 @@
 package com.project.online_shop.bl;
 
-
 import com.project.online_shop.entity.Users;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateSessionFactoryUtil {
+public class HibernateSessionFactory {
     private static SessionFactory sessionFactory;
 
-    private HibernateSessionFactoryUtil() {}
+    private HibernateSessionFactory() {}
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
