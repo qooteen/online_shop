@@ -1,7 +1,17 @@
 package com.project.online_shop.service;
 
-import org.springframework.stereotype.Service;
+import com.project.online_shop.entity.Orders;
+import java.util.List;
 
-@Service
 public interface OrdersService {
+
+    Orders getOrderById(Long id);
+
+    void saveOrder(Orders orders);
+
+    void updateOrder(Orders orders);
+
+    void deleteOrder(Orders orders);
+
+    List<Orders> findAll();
 }

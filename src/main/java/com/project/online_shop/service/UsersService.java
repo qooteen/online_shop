@@ -7,13 +7,13 @@ import java.util.List;
 public interface UsersService {
     UsersDAOImpl usersDao = new UsersDAOImpl();
 
-    Users findUser(Long id);
+    Users getUserById(Long id);
 
     void saveUser(Users users);
 
-    void removeUser(Users users);
-
     void updateUser(Users users);
 
-    List<Users> findAllUsers();
+    void deleteUser(Users users);
+
+    List<Users> findAll();
 }

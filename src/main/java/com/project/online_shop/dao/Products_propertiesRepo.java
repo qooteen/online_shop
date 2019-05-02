@@ -1,9 +1,9 @@
 package com.project.online_shop.dao;
 
-import com.project.online_shop.entity.Roles;
+import com.project.online_shop.entity.Products_properties;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RolesDAO extends JpaRepository<Roles, Long> {
+public interface Products_propertiesRepo extends JpaRepository<Products_properties, Long> {
 }

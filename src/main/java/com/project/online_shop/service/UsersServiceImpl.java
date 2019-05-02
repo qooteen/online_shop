@@ -1,32 +1,34 @@
 package com.project.online_shop.service;
 
 import com.project.online_shop.entity.Users;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Service
 public class UsersServiceImpl implements UsersService{
 
     @Override
-    public Users findUser(Long id) {
-        return usersDao.findById(id);
+    public Users getUserById(Long id) {
+        return usersDao.getUserById(id);
     }
 
     @Override
     public void saveUser(Users users) {
-        usersDao.save(users);
+        usersDao.saveUser(users);
     }
 
     @Override
-    public void removeUser(Users users) {
-        usersDao.remove(users);
+    public void deleteUser(Users users) {
+        usersDao.deleteUser(users);
     }
 
     @Override
     public void updateUser(Users users) {
-        usersDao.update(users);
+        usersDao.updateUser(users);
     }
 
     @Override
-    public List<Users> findAllUsers() {
+    public List<Users> findAll() {
         return usersDao.findAll();
     }
 }

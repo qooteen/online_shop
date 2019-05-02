@@ -8,10 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class UsersDAOImpl implements UsersDAO {
 
     @Override
-    public Users findById(Long id) {
+    public Users getUserById(Long id) {
         return HibernateSessionFactory.getSessionFactory().openSession().get(Users.class, id);
     }
 
@@ -22,7 +23,7 @@ public class UsersDAOImpl implements UsersDAO {
     }
 
     @Override
-    public void save(Users users) {
+    public void saveUser(Users users) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -33,7 +34,7 @@ public class UsersDAOImpl implements UsersDAO {
     }
 
     @Override
-    public void update(Users users) {
+    public void updateUser(Users users) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -44,7 +45,7 @@ public class UsersDAOImpl implements UsersDAO {
     }
 
     @Override
-    public void remove(Users users) {
+    public void deleteUser(Users users) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
