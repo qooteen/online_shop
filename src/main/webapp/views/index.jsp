@@ -1,9 +1,11 @@
-<%@page session="false" %>
+<!DOCTYPE HTML>
 <html>
 <head>
-    <title>Home</title>
+    <meta charset="UTF-8" />
+    <title>Welcome</title>
 </head>
 <body>
-<h1>Hello world!</h1>
+<h1>Welcome</h1>
 </body>
+
 </html>
