@@ -1,7 +1,7 @@
 package com.project.online_shop.service;
 
 import com.project.online_shop.dao.UsersDAOImpl;
-import com.project.online_shop.entity.Users;
+import com.project.online_shop.domain.Users;
 import java.util.List;
 
 public interface UsersService {

@@ -1,5 +1,7 @@
-package com.project.online_shop.app;
+package com.project.online_shop;
 
+import com.project.online_shop.service.ProductsService;
+import com.project.online_shop.service.UsersService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -7,6 +9,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
+       SpringApplication.run(Application.class, args);
     }
 }

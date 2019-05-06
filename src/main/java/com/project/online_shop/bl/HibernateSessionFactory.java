@@ -1,6 +1,6 @@
 package com.project.online_shop.bl;
 
-import com.project.online_shop.entity.Users;
+import com.project.online_shop.domain.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;

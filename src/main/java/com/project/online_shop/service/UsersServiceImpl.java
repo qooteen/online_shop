@@ -1,10 +1,10 @@
 package com.project.online_shop.service;
 
-import com.project.online_shop.entity.Users;
+import com.project.online_shop.domain.Users;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Service
+@Service("usersService")
 public class UsersServiceImpl implements UsersService{
 
     @Override

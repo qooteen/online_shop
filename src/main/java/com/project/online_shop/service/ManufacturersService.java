@@ -1,6 +1,6 @@
 package com.project.online_shop.service;
 
-import com.project.online_shop.entity.Manufacturers;
+import com.project.online_shop.domain.Manufacturers;
 import java.util.List;
 
 public interface ManufacturersService {

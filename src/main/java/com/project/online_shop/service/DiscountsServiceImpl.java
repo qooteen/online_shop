@@ -1,43 +1,39 @@
 package com.project.online_shop.service;
 
-import com.project.online_shop.dao.DiscountsRepo;
-import com.project.online_shop.entity.Discounts;
+import com.project.online_shop.repository.DiscountsRepository;
+import com.project.online_shop.domain.Discounts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Service
+@Service("discountsService")
 public class DiscountsServiceImpl implements DiscountsService{
 
-    private DiscountsRepo discountsRepo;
-
     @Autowired
-    public void setDiscountsRepo(DiscountsRepo discountsRepo) {
-        this.discountsRepo = discountsRepo;
-    }
+    private DiscountsRepository discountsRepository;
 
     @Override
     public Discounts getDiscountById(Long id) {
-        return discountsRepo.getOne(id);
+        return discountsRepository.getOne(id);
     }
 
     @Override
     public void saveDiscount(Discounts discounts) {
-        discountsRepo.save(discounts);
+        discountsRepository.save(discounts);
     }
 
     @Override
     public void updateDiscount(Discounts discounts) {
-        discountsRepo.save(discounts);
+        discountsRepository.save(discounts);
     }
 
     @Override
     public void deleteDiscount(Discounts discounts) {
-        discountsRepo.delete(discounts);
+        discountsRepository.delete(discounts);
     }
 
     @Override
     public List<Discounts> findAll() {
-        return discountsRepo.findAll();
+        return discountsRepository.findAll();
     }
 }

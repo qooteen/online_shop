@@ -1,14 +1,11 @@
 package com.project.online_shop.dao;
 
 import com.project.online_shop.bl.HibernateSessionFactory;
-import com.project.online_shop.entity.Users;
+import com.project.online_shop.domain.Users;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
-@Repository
 public class UsersDAOImpl implements UsersDAO {
 
     @Override
@@ -18,7 +15,7 @@ public class UsersDAOImpl implements UsersDAO {
 
     @Override
     public List<Users> findAll() {
-        List<Users> users = (List<Users>) HibernateSessionFactory.getSessionFactory().openSession().createQuery("FROM users").list();
+        List<Users> users = (List<Users>) HibernateSessionFactory.getSessionFactory().openSession().createQuery("FROM Users").list();
         return users;
     }
 

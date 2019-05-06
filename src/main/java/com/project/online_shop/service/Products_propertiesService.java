@@ -1,6 +1,6 @@
 package com.project.online_shop.service;
 
-import com.project.online_shop.entity.Products_properties;
+import com.project.online_shop.domain.Products_properties;
 import java.util.List;
 
 public interface Products_propertiesService {

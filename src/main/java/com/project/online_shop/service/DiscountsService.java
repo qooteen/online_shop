@@ -1,6 +1,6 @@
 package com.project.online_shop.service;
 
-import com.project.online_shop.entity.Discounts;
+import com.project.online_shop.domain.Discounts;
 import java.util.List;
 
 public interface DiscountsService {

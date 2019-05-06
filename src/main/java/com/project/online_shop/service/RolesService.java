@@ -1,6 +1,6 @@
 package com.project.online_shop.service;
 
-import com.project.online_shop.entity.Roles;
+import com.project.online_shop.domain.Roles;
 
 import java.util.List;
 

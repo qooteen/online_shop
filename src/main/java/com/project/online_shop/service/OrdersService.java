@@ -1,6 +1,6 @@
 package com.project.online_shop.service;
 
-import com.project.online_shop.entity.Orders;
+import com.project.online_shop.domain.Orders;
 import java.util.List;
 
 public interface OrdersService {

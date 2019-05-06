@@ -1,6 +1,6 @@
 package com.project.online_shop.service;
 
-import com.project.online_shop.entity.Products_images;
+import com.project.online_shop.domain.Products_images;
 import java.util.List;
 
 public interface Products_imagesService {

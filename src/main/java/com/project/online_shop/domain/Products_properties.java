@@ -1,4 +1,4 @@
-package com.project.online_shop.entity;
+package com.project.online_shop.domain;
 
 import javax.persistence.*;
 

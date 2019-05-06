@@ -1,43 +1,41 @@
 package com.project.online_shop.service;
 
-import com.project.online_shop.dao.OrdersRepo;
-import com.project.online_shop.entity.Orders;
+import com.project.online_shop.repository.OrdersRepository;
+import com.project.online_shop.domain.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
-@Service
+@Service("ordersService")
 public class OrdersServiceImpl implements OrdersService{
 
-    private OrdersRepo ordersRepo;
-
     @Autowired
-    public void setOrdersRepo(OrdersRepo ordersRepo) {
-        this.ordersRepo = ordersRepo;
-    }
+    private OrdersRepository ordersRepository;
 
     @Override
     public Orders getOrderById(Long id) {
-        return ordersRepo.getOne(id);
+        return ordersRepository.getOne(id);
     }
 
     @Override
     public void saveOrder(Orders orders) {
-        ordersRepo.save(orders);
+        ordersRepository.save(orders);
     }
 
     @Override
     public void updateOrder(Orders orders) {
-        ordersRepo.save(orders);
+        ordersRepository.save(orders);
     }
 
     @Override
     public void deleteOrder(Orders orders) {
-        ordersRepo.delete(orders);
+        ordersRepository.delete(orders);
     }
 
     @Override
     public List<Orders> findAll() {
-        return ordersRepo.findAll();
+        return ordersRepository.findAll();
     }
 }
