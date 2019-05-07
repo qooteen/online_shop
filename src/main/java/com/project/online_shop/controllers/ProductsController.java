@@ -17,10 +17,10 @@ public class ProductsController {
         this.productsService = productsService;
     }
 
-    @GetMapping(value = "/products")
+    @GetMapping(value = "/hello")
     public String products(Model model) {
         model.addAttribute("products", productsService.getProductById(2L));
-         return "index";
+         return "hello";
     }
 
 }

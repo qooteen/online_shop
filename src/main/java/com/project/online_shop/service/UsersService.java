@@ -5,7 +5,7 @@ import com.project.online_shop.domain.Users;
 import java.util.List;
 
 public interface UsersService {
-    UsersDAOImpl usersDao = new UsersDAOImpl();
+    //UsersDAOImpl usersDao = new UsersDAOImpl();
 
     Users getUserById(Long id);
 
@@ -15,5 +15,10 @@ public interface UsersService {
 
     void deleteUser(Users users);
 
+   // Users findByUsername (String username);
+
     List<Users> findAll();
+
+    Users findUsersByUsername(String username);
+
 }

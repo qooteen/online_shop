@@ -12,19 +12,9 @@ public class Roles {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long role_id;
 
+
     @Column(name = "description_role", length = 100)
-    private String description_role;
-
-    @OneToMany(mappedBy = "role_id", cascade = CascadeType.ALL)
-    private Set<Users> users = new HashSet<>();
-
-    public Set<Users> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<Users> users) {
-        this.users = users;
-    }
+    private String descriptionrole;
 
     public Roles() {
     }
@@ -37,19 +27,19 @@ public class Roles {
         this.role_id = role_id;
     }
 
-    public String getDescription_role() {
-        return description_role;
+    public String getDescriptionrole() {
+        return descriptionrole;
     }
 
-    public void setDescription_role(String description_role) {
-        this.description_role = description_role;
+    public void setDescriptionrole(String description_role) {
+        this.descriptionrole = description_role;
     }
 
     @Override
     public String toString() {
         return "Roles{" +
                 "role_id=" + role_id +
-                ", description_role='" + description_role + '\'' +
+                ", descriptionrole='" + descriptionrole + '\'' +
                 '}';
     }
 }

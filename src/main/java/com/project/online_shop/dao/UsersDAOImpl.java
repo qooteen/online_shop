@@ -4,9 +4,18 @@ import com.project.online_shop.bl.HibernateSessionFactory;
 import com.project.online_shop.domain.Users;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
+@Repository("usersDAOImpl")
 public class UsersDAOImpl implements UsersDAO {
+
+    @Override
+    public Users findByUsername (String username) {
+        return HibernateSessionFactory.getSessionFactory().openSession().find(Users.class, username);
+    }
+
 
     @Override
     public Users getUserById(Long id) {
@@ -15,7 +24,7 @@ public class UsersDAOImpl implements UsersDAO {
 
     @Override
     public List<Users> findAll() {
-        List<Users> users = (List<Users>) HibernateSessionFactory.getSessionFactory().openSession().createQuery("FROM Users").list();
+        List<Users> users = (List<Users>) HibernateSessionFactory.getSessionFactory().openSession().createQuery("FROM users").list();
         return users;
     }
 

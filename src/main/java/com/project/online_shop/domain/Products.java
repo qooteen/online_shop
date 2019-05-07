@@ -16,7 +16,7 @@ public class Products {
     private String title;
 
     @Column(name = "description_product")
-    private String description_product;
+    private String descproduct;
 
     @Column(name = "price")
     private Double price;
@@ -91,11 +91,11 @@ public class Products {
     }
 
     public String getDescription_product() {
-        return description_product;
+        return descproduct;
     }
 
     public void setDescription_product(String description_product) {
-        this.description_product = description_product;
+        this.descproduct = description_product;
     }
 
     public Double getPrice() {
@@ -151,7 +151,7 @@ public class Products {
         return "Products{" +
                 "product_id=" + product_id +
                 ", title='" + title + '\'' +
-                ", description_product='" + description_product + '\'' +
+                ", description_product='" + descproduct + '\'' +
                 ", price=" + price +
                 ", image='" + image + '\'' +
                 ", manufacturer_id=" + manufacturer_id +

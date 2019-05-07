@@ -11,21 +11,21 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_id;
 
-    @Column(name = "login", length = 50)
-    private String login;
+    @Column(name = "username", length = 50)
+    private String username;
 
     @Column(name = "password", length = 50)
     private String password;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
-    private Roles role_id;
 
     @Column(name = "email", length = 50)
     private String email;
 
     @Column(name = "address", length = 100)
     private String address;
+
+    @OneToOne
+    @JoinColumn(name = "role_id")
+    private Roles roles;
 
     @Column(name = "post_index", length = 50)
     private String post_index;
@@ -46,6 +46,25 @@ public class Users {
     @Column(name = "birthday")
     private Date birthday;
 
+    @Column(name = "active")
+    private Boolean active;
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public void setRoles(Roles roles) {
+        this.roles = roles;
+    }
+
+    public Roles getRoles() {
+        return roles;
+    }
+
     public Users() {
     }
 
@@ -57,12 +76,12 @@ public class Users {
         this.user_id = user_id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -71,14 +90,6 @@ public class Users {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Roles getRole_id() {
-        return role_id;
-    }
-
-    public void setRole_id(Roles role_id) {
-        this.role_id = role_id;
     }
 
     public String getEmail() {
@@ -149,17 +160,18 @@ public class Users {
     public String toString() {
         return "Users{" +
                 "user_id=" + user_id +
-                ", login='" + login + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", role_id=" + role_id +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
+                ", roles=" + roles +
                 ", post_index='" + post_index + '\'' +
                 ", first_name='" + first_name + '\'' +
                 ", second_name='" + second_name + '\'' +
                 ", phone_number='" + phone_number + '\'' +
-                ", discount_id='" + discount_id + '\'' +
+                ", discount_id=" + discount_id +
                 ", birthday=" + birthday +
+                ", active=" + active +
                 '}';
     }
 }

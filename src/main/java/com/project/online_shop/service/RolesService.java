@@ -15,4 +15,7 @@ public interface RolesService {
     void deleteRole(Roles roles);
 
     List<Roles> findAll();
+
+    Roles getRolesByDescriptionrole(String role);
+
 }

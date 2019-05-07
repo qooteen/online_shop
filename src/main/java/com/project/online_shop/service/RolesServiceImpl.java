@@ -9,8 +9,19 @@ import java.util.List;
 @Service("rolesService")
 public class RolesServiceImpl implements RolesService{
 
-    @Autowired
+
     private RolesRepository rolesRepository;
+
+    @Autowired
+    public void setRolesRepository(RolesRepository rolesRepository) {
+        this.rolesRepository = rolesRepository;
+    }
+
+    @Override
+    public Roles getRolesByDescriptionrole(String role) {
+        return rolesRepository.getRolesByDescriptionrole(role);
+    }
+
 
     @Override
     public Roles getRoleById(Long id) {

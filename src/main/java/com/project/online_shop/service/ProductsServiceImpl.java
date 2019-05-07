@@ -40,4 +40,9 @@ public class ProductsServiceImpl implements ProductsService{
     public List<Products> findAll() {
         return productsRepository.findAll();
     }
+
+    @Override
+    public List<Products> findByDescproduct(String Description_product){
+        return productsRepository.findByDescproduct(Description_product);
+    }
 }
