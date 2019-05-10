@@ -12,14 +12,14 @@ public class Manufacturers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long manufacturer_id;
 
-    @Column(name = "manufacturer_name", length = 50)
-    private String manufacturer_name;
+    @Column(name = "title", length = 50)
+    private String title;
 
     @Column(name = "logo", length = 50)
     private String logo;
 
-    @Column(name = "description_manufacturer", length = 100)
-    private String description_manufacturer;
+    @Column(name = "description", length = 100)
+    private String description;
 
     @Column(name = "site", length = 100)
     private String site;
@@ -46,12 +46,12 @@ public class Manufacturers {
         this.manufacturer_id = manufacturer_id;
     }
 
-    public String getManufacturer_name() {
-        return manufacturer_name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setManufacturer_name(String manufacturer_name) {
-        this.manufacturer_name = manufacturer_name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getLogo() {
@@ -62,12 +62,12 @@ public class Manufacturers {
         this.logo = logo;
     }
 
-    public String getDescription_manufacturer() {
-        return description_manufacturer;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescription_manufacturer(String description_manufacturer) {
-        this.description_manufacturer = description_manufacturer;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getSite() {
@@ -82,9 +82,9 @@ public class Manufacturers {
     public String toString() {
         return "Manufacturers{" +
                 "manufacturer_id=" + manufacturer_id +
-                ", manufacturer_name='" + manufacturer_name + '\'' +
+                ", title='" + title + '\'' +
                 ", logo='" + logo + '\'' +
-                ", description_manufacturer='" + description_manufacturer + '\'' +
+                ", description='" + description + '\'' +
                 ", site='" + site + '\'' +
                 '}';
     }

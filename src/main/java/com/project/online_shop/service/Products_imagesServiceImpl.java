@@ -9,8 +9,12 @@ import java.util.List;
 @Service("products_imagesService")
 public class Products_imagesServiceImpl implements Products_imagesService{
 
-    @Autowired
     private Products_imagesRepository products_imagesRepository;
+
+    @Autowired
+    public void setProducts_imagesRepository(Products_imagesRepository products_imagesRepository) {
+        this.products_imagesRepository = products_imagesRepository;
+    }
 
     @Override
     public Products_images getProducts_imageById(Long id) {

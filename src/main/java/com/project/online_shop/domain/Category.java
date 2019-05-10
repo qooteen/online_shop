@@ -12,25 +12,20 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long category_id;
 
-    @Column(name = "category_name", length = 100)
-    private String category_name;
+    @Column(name = "title", length = 100)
+    private String title;
 
-    @Column(name = "category_logo", length = 100)
-    private String category_logo;
+    @Column(name = "logo", length = 100)
+    private String logo;
 
-    @Column(name = "parent_id")
-    private Integer parent_id;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "description_category")
-    private String description_category;
-
-    @Column(name = "category_image")
-    private String category_image;
+    @Column(name = "image")
+    private String image;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "products_category",
-            joinColumns = @JoinColumn(name = "category_id"),
+    @JoinTable(name = "products_category", joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private Set<Products> products;
@@ -54,55 +49,46 @@ public class Category {
         this.category_id = category_id;
     }
 
-    public String getCategory_name() {
-        return category_name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getCategory_logo() {
-        return category_logo;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setCategory_logo(String category_logo) {
-        this.category_logo = category_logo;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
-    public Integer getParent_id() {
-        return parent_id;
+    public String getDescription() {
+        return description;
     }
 
-    public void setParent_id(Integer parent_id) {
-        this.parent_id = parent_id;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getDescription_category() {
-        return description_category;
+    public String getImage() {
+        return image;
     }
 
-    public void setDescription_category(String description_category) {
-        this.description_category = description_category;
-    }
-
-    public String getCategory_image() {
-        return category_image;
-    }
-
-    public void setCategory_image(String category_image) {
-        this.category_image = category_image;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
     public String toString() {
         return "Category{" +
                 "category_id=" + category_id +
-                ", category_name='" + category_name + '\'' +
-                ", category_logo='" + category_logo + '\'' +
-                ", parent_id=" + parent_id +
-                ", description_category='" + description_category + '\'' +
-                ", category_image='" + category_image + '\'' +
+                ", title='" + title + '\'' +
+                ", logo='" + logo + '\'' +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

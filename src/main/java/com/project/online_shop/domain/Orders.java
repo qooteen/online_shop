@@ -1,7 +1,7 @@
 package com.project.online_shop.domain;
 
 import javax.persistence.*;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,29 +18,13 @@ public class Orders {
     @JoinColumn(name = "user_id")
     private Users user_id;
 
-    @Column(name = "email", length = 50)
-    private String email;
-
-    @Column(name = "address", length = 100)
-    private String address;
-
-    @Column(name = "post_index", length = 50)
-    private String post_index;
-
-    @Column(name = "first_name", length = 50)
-    private String first_name;
-
-    @Column(name = "second_name", length = 50)
-    private String second_name;
-
-    @Column(name = "phone_number", length = 50)
-    private String phone_number;
-
+    @Temporal(TemporalType.DATE)
     @Column(name = "order_date")
     private Date order_date;
 
+
     @Column(name = "order_time")
-    private Time order_time;
+    private LocalTime order_time;
 
     @OneToMany(mappedBy = "order_id", cascade = CascadeType.ALL)
     private Set<Products> products = new HashSet<>();
@@ -69,54 +53,6 @@ public class Orders {
         this.user_id = user_id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPost_index() {
-        return post_index;
-    }
-
-    public void setPost_index(String post_index) {
-        this.post_index = post_index;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getSecond_name() {
-        return second_name;
-    }
-
-    public void setSecond_name(String second_name) {
-        this.second_name = second_name;
-    }
-
-    public String getPhone_number() {
-        return phone_number;
-    }
-
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
-    }
-
     public Date getOrder_date() {
         return order_date;
     }
@@ -125,15 +61,12 @@ public class Orders {
         this.order_date = order_date;
     }
 
-    public Time getOrder_time() {
+    public LocalTime getOrder_time() {
         return order_time;
     }
 
-    public void setOrder_time(Time order_time) {
+    public void setOrder_time(LocalTime order_time) {
         this.order_time = order_time;
-    }
-
-    public Orders() {
     }
 
     @Override
@@ -141,12 +74,6 @@ public class Orders {
         return "Orders{" +
                 "order_id=" + order_id +
                 ", user_id=" + user_id +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
-                ", post_index='" + post_index + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", second_name='" + second_name + '\'' +
-                ", phone_number='" + phone_number + '\'' +
                 ", order_date=" + order_date +
                 ", order_time=" + order_time +
                 '}';

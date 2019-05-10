@@ -16,6 +16,6 @@ public interface RolesService {
 
     List<Roles> findAll();
 
-    Roles getRolesByDescriptionrole(String role);
+    Roles getRolesByTitle(String title);
 
 }

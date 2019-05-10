@@ -12,9 +12,11 @@ public class Roles {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long role_id;
 
+    @Column(name = "title", length = 100)
+    private String title;
 
-    @Column(name = "description_role", length = 100)
-    private String descriptionrole;
+    @ManyToMany(mappedBy = "roles")
+    private Set<Users> users;
 
     public Roles() {
     }
@@ -27,19 +29,27 @@ public class Roles {
         this.role_id = role_id;
     }
 
-    public String getDescriptionrole() {
-        return descriptionrole;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDescriptionrole(String description_role) {
-        this.descriptionrole = description_role;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Set<Users> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<Users> users) {
+        this.users = users;
     }
 
     @Override
     public String toString() {
         return "Roles{" +
                 "role_id=" + role_id +
-                ", descriptionrole='" + descriptionrole + '\'' +
+                ", title='" + title + '\'' +
                 '}';
     }
 }

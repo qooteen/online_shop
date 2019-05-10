@@ -15,8 +15,8 @@ public class Products {
     @Column(name = "title", length = 50)
     private String title;
 
-    @Column(name = "description_product")
-    private String descproduct;
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "price")
     private Double price;
@@ -28,8 +28,8 @@ public class Products {
     @JoinColumn(name = "manufacturer_id")
     private Manufacturers manufacturer_id;
 
-    @Column(name = "short_description_product", length = 50)
-    private String short_description_product;
+    @Column(name = "short_description", length = 50)
+    private String short_description;
 
     @Column(name = "avalible")
     private Boolean avalible;
@@ -90,12 +90,12 @@ public class Products {
         this.title = title;
     }
 
-    public String getDescription_product() {
-        return descproduct;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescription_product(String description_product) {
-        this.descproduct = description_product;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Double getPrice() {
@@ -122,12 +122,12 @@ public class Products {
         this.manufacturer_id = manufacturer_id;
     }
 
-    public String getShort_description_product() {
-        return short_description_product;
+    public String getShort_description() {
+        return short_description;
     }
 
-    public void setShort_description_product(String short_description_product) {
-        this.short_description_product = short_description_product;
+    public void setShort_description(String short_description) {
+        this.short_description = short_description;
     }
 
     public Boolean getAvalible() {
@@ -151,11 +151,11 @@ public class Products {
         return "Products{" +
                 "product_id=" + product_id +
                 ", title='" + title + '\'' +
-                ", description_product='" + descproduct + '\'' +
+                ", description='" + description + '\'' +
                 ", price=" + price +
                 ", image='" + image + '\'' +
                 ", manufacturer_id=" + manufacturer_id +
-                ", short_description_product='" + short_description_product + '\'' +
+                ", short_description='" + short_description + '\'' +
                 ", avalible=" + avalible +
                 ", order_id=" + order_id +
                 '}';

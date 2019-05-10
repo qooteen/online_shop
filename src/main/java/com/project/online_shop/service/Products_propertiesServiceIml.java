@@ -9,8 +9,12 @@ import java.util.List;
 @Service("products_propertiesService")
 public class Products_propertiesServiceIml implements Products_propertiesService{
 
-    @Autowired
     private Products_propertiesRepository products_propertiesRepository;
+
+    @Autowired
+    public void setProducts_propertiesRepository(Products_propertiesRepository products_propertiesRepository) {
+        this.products_propertiesRepository = products_propertiesRepository;
+    }
 
     @Override
     public Products_properties getProducts_propertyById(Long id) {

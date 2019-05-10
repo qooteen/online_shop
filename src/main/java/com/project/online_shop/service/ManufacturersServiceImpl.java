@@ -10,8 +10,12 @@ import java.util.List;
 @Service("manufacturersService")
 public class ManufacturersServiceImpl implements ManufacturersService{
 
-    @Autowired
     private ManufacturersRepository manufacturersRepository;
+
+    @Autowired
+    public void setManufacturersRepository(ManufacturersRepository manufacturersRepository) {
+        this.manufacturersRepository = manufacturersRepository;
+    }
 
     @Override
     public Manufacturers getManufacturerById(Long id) {

@@ -9,8 +9,12 @@ import java.util.List;
 @Service("discountsService")
 public class DiscountsServiceImpl implements DiscountsService{
 
-    @Autowired
     private DiscountsRepository discountsRepository;
+
+    @Autowired
+    public void setDiscountsRepository(DiscountsRepository discountsRepository) {
+        this.discountsRepository = discountsRepository;
+    }
 
     @Override
     public Discounts getDiscountById(Long id) {

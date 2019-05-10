@@ -16,14 +16,22 @@ public class Discounts {
     public Discounts() {
     }
 
-    @Column(name = "descriprion_discount")
-    private String descriprion_discount;
+    @Column(name = "descriprion")
+    private String descriprion;
 
     @Column(name = "value")
     private Double value;
 
     @OneToMany(mappedBy = "discount_id", cascade = CascadeType.ALL)
     private Set<Users> users = new HashSet<>();
+
+    public Set<Users> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<Users> users) {
+        this.users = users;
+    }
 
     public Long getDiscount_id() {
         return discount_id;
@@ -33,12 +41,12 @@ public class Discounts {
         this.discount_id = discount_id;
     }
 
-    public String getDescriprion_discount() {
-        return descriprion_discount;
+    public String getDescriprion() {
+        return descriprion;
     }
 
-    public void setDescriprion_discount(String descriprion_discount) {
-        this.descriprion_discount = descriprion_discount;
+    public void setDescriprion(String descriprion) {
+        this.descriprion = descriprion;
     }
 
     public Double getValue() {
@@ -49,19 +57,11 @@ public class Discounts {
         this.value = value;
     }
 
-    public Set<Users> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<Users> users) {
-        this.users = users;
-    }
-
     @Override
     public String toString() {
         return "Discounts{" +
                 "discount_id=" + discount_id +
-                ", descriprion_discount='" + descriprion_discount + '\'' +
+                ", descriprion='" + descriprion + '\'' +
                 ", value=" + value +
                 '}';
     }

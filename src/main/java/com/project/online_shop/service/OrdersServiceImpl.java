@@ -11,8 +11,12 @@ import java.util.List;
 @Service("ordersService")
 public class OrdersServiceImpl implements OrdersService{
 
-    @Autowired
     private OrdersRepository ordersRepository;
+
+    @Autowired
+    public void setOrdersRepository(OrdersRepository ordersRepository) {
+        this.ordersRepository = ordersRepository;
+    }
 
     @Override
     public Orders getOrderById(Long id) {

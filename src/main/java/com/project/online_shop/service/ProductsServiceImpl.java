@@ -42,7 +42,7 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     @Override
-    public List<Products> findByDescproduct(String Description_product){
-        return productsRepository.findByDescproduct(Description_product);
+    public List<Products> findByDescription(String description) {
+        return productsRepository.findByDescription(description);
     }
 }

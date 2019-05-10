@@ -58,7 +58,7 @@ public class Products_images {
 
     @Override
     public String toString() {
-        return "Products_imagesDAO{" +
+        return "Products_images{" +
                 "products_image_id=" + products_image_id +
                 ", product_id=" + product_id +
                 ", title='" + title + '\'' +

@@ -2,6 +2,7 @@ package com.project.online_shop.domain;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -14,8 +15,16 @@ public class Users {
     @Column(name = "username", length = 50)
     private String username;
 
-    @Column(name = "password", length = 50)
+    @Column(name = "password")
     private String password;
+
+    public String getConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(String confirm) {
+        this.confirm = confirm;
+    }
 
     @Column(name = "email", length = 50)
     private String email;
@@ -23,50 +32,37 @@ public class Users {
     @Column(name = "address", length = 100)
     private String address;
 
-    @OneToOne
-    @JoinColumn(name = "role_id")
-    private Roles roles;
+    @Transient
+    transient private String confirm;
 
-    @Column(name = "post_index", length = 50)
-    private String post_index;
+    @Column(name = "index", length = 50)
+    private String index;
 
-    @Column(name = "first_name", length = 50)
-    private String first_name;
+    @Column(name = "firstname", length = 50)
+    private String firstname;
 
-    @Column(name = "second_name", length = 50)
-    private String second_name;
+    @Column(name = "lastname", length = 50)
+    private String lastname;
 
-    @Column(name = "phone_number", length = 50)
-    private String phone_number;
+    @Column(name = "phone", length = 50)
+    private String phone;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "discount_id")
     private Discounts discount_id;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "birthday")
     private Date birthday;
 
     @Column(name = "active")
     private Boolean active;
 
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public void setRoles(Roles roles) {
-        this.roles = roles;
-    }
-
-    public Roles getRoles() {
-        return roles;
-    }
-
-    public Users() {
-    }
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Roles> roles;
 
     public Long getUser_id() {
         return user_id;
@@ -108,36 +104,36 @@ public class Users {
         this.address = address;
     }
 
-    public String getPost_index() {
-        return post_index;
+    public String getIndex() {
+        return index;
     }
 
-    public void setPost_index(String post_index) {
-        this.post_index = post_index;
+    public void setIndex(String index) {
+        this.index = index;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getSecond_name() {
-        return second_name;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setSecond_name(String second_name) {
-        this.second_name = second_name;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Discounts getDiscount_id() {
@@ -156,6 +152,22 @@ public class Users {
         this.birthday = birthday;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Set<Roles> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Roles> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "Users{" +
@@ -164,11 +176,10 @@ public class Users {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
-                ", roles=" + roles +
-                ", post_index='" + post_index + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", second_name='" + second_name + '\'' +
-                ", phone_number='" + phone_number + '\'' +
+                ", index='" + index + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", phone='" + phone + '\'' +
                 ", discount_id=" + discount_id +
                 ", birthday=" + birthday +
                 ", active=" + active +

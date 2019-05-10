@@ -18,8 +18,8 @@ public class RolesServiceImpl implements RolesService{
     }
 
     @Override
-    public Roles getRolesByDescriptionrole(String role) {
-        return rolesRepository.getRolesByDescriptionrole(role);
+    public Roles getRolesByTitle(String title) {
+        return rolesRepository.getRolesByTitle(title);
     }
 
 

@@ -1,15 +1,33 @@
 package com.project.online_shop.service;
 
+import com.project.online_shop.domain.Roles;
 import com.project.online_shop.domain.Users;
+import com.project.online_shop.repository.RolesRepository;
 import com.project.online_shop.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service("usersService")
 public class UsersServiceImpl implements UsersService{
 
     private UsersRepository usersRepository;
+
+    private RolesRepository rolesRepository;
+
+    @Autowired
+    public void setRolesRepository(RolesRepository rolesRepository) {
+        this.rolesRepository = rolesRepository;
+    }
+
+    @Autowired
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Autowired
     public void setUsersRepository(UsersRepository usersRepository) {
@@ -23,6 +41,12 @@ public class UsersServiceImpl implements UsersService{
 
     @Override
     public void saveUser(Users users) {
+
+        users.setPassword(passwordEncoder().encode(users.getPassword()));
+        Set<Roles> roles = new HashSet<>();
+        roles.add(rolesRepository.getRolesByTitle("ROLE_USER"));
+        users.setRoles(roles);
+        users.setActive(true);
         usersRepository.save(users);
     }
 
@@ -42,8 +66,8 @@ public class UsersServiceImpl implements UsersService{
     }
 
     @Override
-    public Users findUsersByUsername(String username) {
-        return usersRepository.findUsersByUsername(username);
+    public Users findByUsername(String username) {
+        return usersRepository.findByUsername(username);
     }
 
 

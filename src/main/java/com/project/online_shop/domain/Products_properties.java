@@ -10,14 +10,14 @@ public class Products_properties {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long products_property_id;
 
-    @Column(name = "property_name", length = 50)
-    private String property_name;
+    @Column(name = "title", length = 50)
+    private String title;
 
-    @Column(name = "property_value", length = 50)
-    private String property_value;
+    @Column(name = "value", length = 50)
+    private String value;
 
-    @Column(name = "property_price")
-    private Double property_price;
+    @Column(name = "price")
+    private Double price;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
@@ -34,28 +34,28 @@ public class Products_properties {
         this.products_property_id = products_property_id;
     }
 
-    public String getProperty_name() {
-        return property_name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setProperty_name(String property_name) {
-        this.property_name = property_name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getProperty_value() {
-        return property_value;
+    public String getValue() {
+        return value;
     }
 
-    public void setProperty_value(String property_value) {
-        this.property_value = property_value;
+    public void setValue(String value) {
+        this.value = value;
     }
 
-    public Double getProperty_price() {
-        return property_price;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setProperty_price(Double property_price) {
-        this.property_price = property_price;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Products getProduct_id() {
@@ -70,9 +70,9 @@ public class Products_properties {
     public String toString() {
         return "Products_properties{" +
                 "products_property_id=" + products_property_id +
-                ", property_name='" + property_name + '\'' +
-                ", property_value='" + property_value + '\'' +
-                ", property_price=" + property_price +
+                ", title='" + title + '\'' +
+                ", value='" + value + '\'' +
+                ", price=" + price +
                 ", product_id=" + product_id +
                 '}';
     }

@@ -9,8 +9,12 @@ import java.util.List;
 @Service("categoryService")
 public class CategoryServiceImpl implements CategoryService{
 
-    @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    public void setCategoryRepository(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
     @Override
     public Category getCategoryById(Long id) {
