@@ -1,7 +1,9 @@
 package com.project.online_shop.controllers;
 
+import com.project.online_shop.domain.Products;
 import com.project.online_shop.domain.Roles;
 import com.project.online_shop.domain.Users;
+import com.project.online_shop.service.ProductsService;
 import com.project.online_shop.service.RolesService;
 import com.project.online_shop.service.UsersService;
 import com.project.online_shop.service.UsersServiceImpl;
@@ -27,6 +29,13 @@ public class RegistrationController {
 
     private UsersService usersService;
 
+    private ProductsService productsService;
+
+    @Autowired
+    public void setProductsService(ProductsService productsService) {
+        this.productsService = productsService;
+    }
+
     @Autowired
     public void setUsersService(UsersService usersService) {
         this.usersService = usersService;
@@ -39,13 +48,13 @@ public class RegistrationController {
 
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(Model model, String error) {
+    public String registration(Model model) {
         model.addAttribute("userForm", new Users());
         return "registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(Users userForm, Model model) {
+    public String registration(@ModelAttribute Users userForm, Model model) {
         Users users = usersService.findByUsername(userForm.getUsername());
         if (users == null) {
             usersService.saveUser(userForm);
@@ -70,13 +79,18 @@ public class RegistrationController {
         return "login";
     }
 
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcome() {
-        return "welcome";
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String admin(Model model) {
+        model.addAttribute("product", new Products());
+
+        return "admin";
     }
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String admin() {
+    @RequestMapping(value = "/admin", method = RequestMethod.POST)
+    public String adminPost(@ModelAttribute Products product, Model model) {
+        productsService.saveProduct(product);
+        model.addAttribute("product", product);
+
         return "admin";
     }
 }

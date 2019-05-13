@@ -19,7 +19,7 @@ public class Products {
     private String description;
 
     @Column(name = "price")
-    private Double price;
+    private Integer price;
 
     @Column(name = "image", length = 50)
     private String image;
@@ -38,13 +38,13 @@ public class Products {
     @JoinColumn(name = "order_id")
     private Orders order_id;
 
-    @OneToMany(mappedBy = "product_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product_id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Products_properties> productsProperties = new HashSet<>();
 
-    @OneToMany(mappedBy = "product_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product_id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Products_images> productsImages = new HashSet<>();
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
     private Set<Category> categories;
 
     public Set<Category> getCategories() {
@@ -98,11 +98,11 @@ public class Products {
         this.description = description;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

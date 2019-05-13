@@ -14,4 +14,5 @@ public interface OrdersService {
     void deleteOrder(Orders orders);
 
     List<Orders> findAll();
+    int getMaxOrderId();
 }

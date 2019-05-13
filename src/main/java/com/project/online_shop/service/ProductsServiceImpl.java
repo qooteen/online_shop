@@ -1,10 +1,12 @@
 package com.project.online_shop.service;
 
+import com.project.online_shop.domain.Category;
 import com.project.online_shop.repository.ProductsRepository;
 import com.project.online_shop.domain.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Set;
 
 @Service("productsService")
 public class ProductsServiceImpl implements ProductsService{
@@ -44,5 +46,10 @@ public class ProductsServiceImpl implements ProductsService{
     @Override
     public List<Products> findByDescription(String description) {
         return productsRepository.findByDescription(description);
+    }
+
+    @Override
+    public Set<Products> findByCategories(Set<Category> categories) {
+        return productsRepository.findByCategories(categories);
     }
 }

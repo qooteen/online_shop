@@ -23,11 +23,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/resources/**", "/registration", "/", "/welcome","/403").permitAll();
-        http.authorizeRequests().antMatchers("/admin/**").access("hasRole('ADMIN')").and().exceptionHandling().accessDeniedPage("/403");
+        http.authorizeRequests().antMatchers("/resources/**", "/registration", "/","/403").permitAll();
+        http.authorizeRequests().antMatchers("/admin").access("hasRole('ADMIN')").and().exceptionHandling().accessDeniedPage("/403");
         http.authorizeRequests()
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/welcome")
+                .formLogin().loginPage("/login").defaultSuccessUrl("/")
                 .failureUrl("/login?error")
                 .and().logout().logoutSuccessUrl("/login?logout");
 
@@ -46,11 +46,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 
     }
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//
-//        auth.inMemoryAuthentication().passwordEncoder(passwordEncoder()).withUser("admin").password(passwordEncoder().encode("a")).roles("ADMIN");
-//
-//    }
 }
