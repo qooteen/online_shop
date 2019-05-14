@@ -26,8 +26,6 @@
     </form>
     <form id="Registration" method="GET" action="${contextPath}registration">
     </form>
-    <form id="Cart" method="GET" action="${contextPath}cart">
-    </form>
     <form id="ShopLogo" method="GET" action="${contextPath}/">
     </form>
     <h1>
@@ -59,7 +57,6 @@
                 <a onclick="document.forms['Registration'].submit()">Registration</a> |
             </c:otherwise>
         </c:choose>
-        <a onclick="document.forms['Cart'].submit()">Cart</a> |
         <c:choose>
         <c:when test="${total == 0}">
             <a class="error">Cart is empty</a>
