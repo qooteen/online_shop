@@ -1,7 +1,7 @@
 package com.project.online_shop.service;
 
 import com.project.online_shop.repository.CategoryRepository;
-import com.project.online_shop.domain.Category;
+import com.project.online_shop.domain.Categories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -17,27 +17,27 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public Category getCategoryById(Long id) {
+    public Categories getCategoryById(Long id) {
         return categoryRepository.getOne(id);
     }
 
     @Override
-    public void saveCategory(Category category) {
-        categoryRepository.save(category);
+    public void saveCategory(Categories categories) {
+        categoryRepository.save(categories);
     }
 
     @Override
-    public void updateCategory(Category category) {
-        categoryRepository.save(category);
+    public void updateCategory(Categories categories) {
+        categoryRepository.save(categories);
     }
 
     @Override
-    public void deleteCategory(Category category) {
-        categoryRepository.delete(category);
+    public void deleteCategory(Categories categories) {
+        categoryRepository.delete(categories);
     }
 
     @Override
-    public List<Category> findAll() {
+    public List<Categories> findAll() {
         return categoryRepository.findAll();
     }
 }

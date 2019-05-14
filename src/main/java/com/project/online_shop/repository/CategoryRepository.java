@@ -1,12 +1,9 @@
 package com.project.online_shop.repository;
 
-import com.project.online_shop.domain.Category;
-import com.project.online_shop.domain.Products;
+import com.project.online_shop.domain.Categories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository("categoryRepository")
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface CategoryRepository extends JpaRepository<Categories, Long> {
 }

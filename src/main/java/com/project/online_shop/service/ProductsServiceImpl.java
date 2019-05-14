@@ -1,6 +1,6 @@
 package com.project.online_shop.service;
 
-import com.project.online_shop.domain.Category;
+import com.project.online_shop.domain.Categories;
 import com.project.online_shop.repository.ProductsRepository;
 import com.project.online_shop.domain.Products;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     @Override
-    public Set<Products> findByCategories(Set<Category> categories) {
+    public Set<Products> findByCategories(Set<Categories> categories) {
         return productsRepository.findByCategories(categories);
     }
 }

@@ -1,17 +1,18 @@
 package com.project.online_shop.service;
 
-import com.project.online_shop.domain.Category;
+import com.project.online_shop.domain.Categories;
+
 import java.util.List;
 
 public interface CategoryService {
 
-    Category getCategoryById(Long id);
+    Categories getCategoryById(Long id);
 
-    void saveCategory(Category category);
+    void saveCategory(Categories categories);
 
-    void updateCategory(Category category);
+    void updateCategory(Categories categories);
 
-    void deleteCategory(Category category);
+    void deleteCategory(Categories categories);
 
-    List<Category> findAll();
+    List<Categories> findAll();
 }

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("cart")
@@ -27,7 +29,8 @@ public class CartController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String index() {
+    public String index(Model model, HttpSession session) {
+        model.addAttribute("total", summ(session));
         return "/cart/cart";
     }
 
@@ -49,11 +52,13 @@ public class CartController {
                cart.get(index).setQuantity(quantity);
            }
            session.setAttribute("cart", cart);
-
        }
 
         return "redirect:../../cart";
     }
+
+    private Map<Long, String[]> map = new HashMap<>();
+
 
     @RequestMapping(value = {"/remove/{id}"}, method = RequestMethod.GET)
     public String remove(@PathVariable("id") Long id, HttpSession session) {
@@ -61,22 +66,29 @@ public class CartController {
         List<Item> cart = (List<Item>) session.getAttribute("cart");
         int index = isExists(id, cart);
         cart.remove(index);
+        map.remove(id);
         session.setAttribute("cart", cart);
         return "redirect:../../cart";
     }
 
-    @RequestMapping(value = {"/update"}, method = RequestMethod.POST)
-    public String update(HttpServletRequest request, HttpSession session) {
-
-        String[] quantities = request.getParameterValues("quantity");
+    @RequestMapping(value = {"/update/{id}"}, method = RequestMethod.POST)
+    public String update(@PathVariable("id") Long id, HttpServletRequest request, HttpSession session) {
+        if (map.containsKey(id))
+            map.remove(id);
+        map.put(id, request.getParameterValues("quantity"));
         List<Item> cart = (List<Item>) session.getAttribute("cart");
 
-        for (int i = 0; i < cart.size(); i++) {
-            cart.get(i).setQuantity(Integer.parseInt(quantities[i]));
+        for (int i = 0; i < cart.size(); i++)
+        for (Map.Entry<Long, String[]> pair: map.entrySet()) {
+            if (pair.getKey() == id && cart.get(i).getProducts().getProduct_id() == id) {
+                cart.get(i).setQuantity(Integer.parseInt(pair.getValue()[0]));
+                break;
+            }
         }
+
         session.setAttribute("cart", cart);
 
-        return "redirect:../cart";
+        return "redirect:../../cart";
     }
 
 
@@ -86,5 +98,15 @@ public class CartController {
                 return i;
         }
         return -1;
+    }
+
+    private int summ(HttpSession session) {
+        List<Item> cart = (List<Item>) session.getAttribute("cart");
+        int summ = 0;
+        if (cart != null && cart.size() != 0)
+        for (Item item: cart) {
+            summ += item.getQuantity() * item.getProducts().getPrice().intValue();
+        }
+        return summ;
     }
 }

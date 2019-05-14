@@ -25,9 +25,10 @@
 
 </head>
 
-<body>
+<body style="
+      padding-top: 0">
 
-<div class="container">
+<div class="container" >
 
     <form id="ShopLogo" method="GET" action="${contextPath}/">
     </form>

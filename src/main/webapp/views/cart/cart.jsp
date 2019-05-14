@@ -22,6 +22,12 @@
 </head>
 <body>
 <div class="container">
+    <form id="SignIn" method="GET" action="${contextPath}login">
+    </form>
+    <form id="Registration" method="GET" action="${contextPath}registration">
+    </form>
+    <form id="Cart" method="GET" action="${contextPath}cart">
+    </form>
     <form id="ShopLogo" method="GET" action="${contextPath}/">
     </form>
     <h1>
@@ -46,18 +52,24 @@
                         </a>
                     </c:otherwise>
                 </c:choose>
-                <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+                <a onclick="document.forms['logoutForm'].submit()">Logout</a> |
             </c:when>
             <c:otherwise>
                 <a onclick="document.forms['SignIn'].submit()">Sign In</a> |
-                <a onclick="document.forms['Registration'].submit()">Registration</a>
+                <a onclick="document.forms['Registration'].submit()">Registration</a> |
             </c:otherwise>
         </c:choose>
-
+        <a onclick="document.forms['Cart'].submit()">Cart</a> |
+        <c:choose>
+        <c:when test="${total == 0}">
+            <a class="error">Cart is empty</a>
+        </c:when>
+        <c:otherwise>
+        <a>Total price:<a class="product-price"> ${total}</a></a>
+        </c:otherwise>
+        </c:choose>
     </h4>
 </div>
-
-<form action="/cart/update" method="POST">
 
 <div class="container content">
     <div class="row">
@@ -70,12 +82,14 @@
                             <div class="product-img">
                                 <a href="#"><img src="/resources/img/${item.products.image}" alt=""></a>
                             </div>
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
                             <p class="product-title"><a href="#">${item.products.title}</a></p>
                             <p class="product-desc">${item.products.short_description}</p>
                             <p class="product-price">${item.products.price}</p>
-                            <input type="number" value="${item.quantity}" name="quantity" height="50" size="100" style="width: 70px"/>
+                            <form action="/cart/update/${item.products.product_id}" method="POST">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <p>Quantity: <input type="number" min="1" name="quantity" value="${item.quantity}"></p>
+                            </form>
                             <p class="product-price">${item.products.price * item.quantity}</p>
                         </div>
                     </div>
@@ -84,7 +98,7 @@
         </div>
     </div>
 </div>
-</form>
+
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

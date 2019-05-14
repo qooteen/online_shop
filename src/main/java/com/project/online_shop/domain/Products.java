@@ -1,6 +1,9 @@
 package com.project.online_shop.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,19 +27,29 @@ public class Products {
     @Column(name = "image", length = 50)
     private String image;
 
+    @Transient
+    private MultipartFile upload;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "manufacturer_id")
     private Manufacturers manufacturer_id;
 
-    @Column(name = "short_description", length = 50)
+    @Column(name = "short_description")
     private String short_description;
 
     @Column(name = "avalible")
     private Boolean avalible;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id")
-    private Orders order_id;
+    @ManyToMany(mappedBy = "products")
+    private Set<Orders> orders;
+
+    public Set<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Orders> orders) {
+        this.orders = orders;
+    }
 
     @OneToMany(mappedBy = "product_id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Products_properties> productsProperties = new HashSet<>();
@@ -44,14 +57,18 @@ public class Products {
     @OneToMany(mappedBy = "product_id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Products_images> productsImages = new HashSet<>();
 
-    @ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
-    private Set<Category> categories;
 
-    public Set<Category> getCategories() {
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "products_categories", joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Categories> categories;
+
+    public Set<Categories> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(Set<Categories> categories) {
         this.categories = categories;
     }
 
@@ -110,6 +127,14 @@ public class Products {
         return image;
     }
 
+    public MultipartFile getUpload() {
+        return upload;
+    }
+
+    public void setUpload(MultipartFile upload) {
+        this.upload = upload;
+    }
+
     public void setImage(String image) {
         this.image = image;
     }
@@ -138,14 +163,6 @@ public class Products {
         this.avalible = avalible;
     }
 
-    public Orders getOrder_id() {
-        return order_id;
-    }
-
-    public void setOrder_id(Orders order_id) {
-        this.order_id = order_id;
-    }
-
     @Override
     public String toString() {
         return "Products{" +
@@ -157,7 +174,6 @@ public class Products {
                 ", manufacturer_id=" + manufacturer_id +
                 ", short_description='" + short_description + '\'' +
                 ", avalible=" + avalible +
-                ", order_id=" + order_id +
                 '}';
     }
 }

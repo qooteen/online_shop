@@ -33,66 +33,47 @@
     </h1>
 </div>
 
-<%--<form class="form-horizontal">--%>
-<%--    <form:form method="POST" modelAttribute="product" class="form-signin">--%>
-<%--    <div class="form-group">--%>
-<%--        <label for="inputTitle" class="col-xs-2 control-label">Title</label>--%>
-<%--        <spring:bind path="title">--%>
-<%--        <div class="col-xs-10">--%>
-<%--        <form:input id="inputTitle" type="text" style="width: 50%" path="title" class="form-control" placeholder="Title"--%>
-<%--                    autofocus="true"></form:input>--%>
-<%--        </div>--%>
-<%--        </spring:bind>--%>
-<%--    </div>--%>
-<%--    <div class="form-group">--%>
-<%--        <div class="col-xs-offset-2 col-xs-10">--%>
-<%--            <div class="checkbox">--%>
-<%--                <label><input class="title" type="checkbox"> Avalible </label>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--    <div class="form-group">--%>
-<%--        <div class="col-xs-offset-2 col-xs-10">--%>
-<%--            <button type="submit" class="btn btn-default">ADD</button>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--    </form:form>--%>
-<%--</form>--%>
 <div class="container content">
 
-<form:form method="POST" modelAttribute="product" class="form-signin" action="${contextPath}/admin">
+<form:form method="POST" modelAttribute="product" class="form-signin" enctype="multipart/form-data" action="${contextPath}/admin">
     <h2 class="form-signin-heading">Add product</h2>
     <spring:bind path="title">
         <div>
             <form:input type="text" path="title" class="form-control" placeholder="Title"
                         autofocus="true"></form:input>
-            <form:errors path="title"></form:errors>
         </div>
 
     </spring:bind>
     <spring:bind path="price">
         <div>
             <form:input  type="text" path="price" class="form-control" placeholder="Price"></form:input>
-            <form:errors path="price"></form:errors>
         </div>
     </spring:bind>
     <spring:bind path="description">
         <div>
             <form:input  type="text" path="description" class="form-control" placeholder="Description"></form:input>
-            <form:errors path="description"></form:errors>
         </div>
     </spring:bind>
     <spring:bind path="short_description">
         <div>
-            <form:input  type="text" path="short_description" class="form-control" placeholder="Short description"></form:input>
-            <form:errors path="short_description"></form:errors>
+            <form:input type="text" path="short_description" class="form-control" placeholder="Short description"></form:input>
         </div>
     </spring:bind>
     <spring:bind path="avalible">
-        <div class="checkbox">
-            <form:input  type="" path="avalible" class="checkbox" placeholder="Avalible"></form:input>
+        <div>
+            <p>Avalible <form:checkbox path="avalible"  placeholder="Avalible"></form:checkbox></p>
         </div>
     </spring:bind>
+        <div>
+            <p>Categories <form:select class="form-control" path="categories" items="${map}"/></p>
+        </div>
+    <div>
+        <p>Manufacture <form:select class="form-control" path="manufacturer_id" items="${map2}"/></p>
+    </div>
+    <div class="form-group">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <form:input  type="file" name="upload"  path="upload" class="form-control-file" ></form:input>
+    </div>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
 </form:form>

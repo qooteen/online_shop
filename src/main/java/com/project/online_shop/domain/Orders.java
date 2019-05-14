@@ -26,8 +26,11 @@ public class Orders {
     @Column(name = "order_time")
     private LocalTime order_time;
 
-    @OneToMany(mappedBy = "order_id", cascade = CascadeType.ALL)
-    private Set<Products> products = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "products_orders", joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private Set<Products> products;
 
     public Set<Products> getProducts() {
         return products;

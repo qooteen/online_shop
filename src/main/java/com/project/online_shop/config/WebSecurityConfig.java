@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/resources/**", "/registration", "/","/403").permitAll();
+        http.authorizeRequests().antMatchers("/resources/**", "/registration", "/","/403", "/cart/**").permitAll();
         http.authorizeRequests().antMatchers("/admin").access("hasRole('ADMIN')").and().exceptionHandling().accessDeniedPage("/403");
         http.authorizeRequests()
                 .and()

@@ -1,17 +1,12 @@
 package com.project.online_shop.controllers;
 
-import com.project.online_shop.domain.Category;
-import com.project.online_shop.domain.Products;
+import com.project.online_shop.domain.Categories;
 import com.project.online_shop.service.CategoryService;
 import com.project.online_shop.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Controller
 public class MainController {
@@ -40,9 +35,9 @@ public class MainController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String mainPagePost(@PathVariable Long id, Model model) {
 
-        Category category = categoryService.getCategoryById(id);
+        Categories categories = categoryService.getCategoryById(id);
 
-        model.addAttribute("products", category.getProducts());
+        model.addAttribute("products", categories.getProducts());
         model.addAttribute("categories", categoryService.findAll());
         return "main";
     }

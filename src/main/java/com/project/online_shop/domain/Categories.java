@@ -5,8 +5,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "categories")
+public class Categories {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +24,7 @@ public class Category {
     @Column(name = "image")
     private String image;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "products_category", joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
     private Set<Products> products;
 
     public Set<Products> getProducts() {
@@ -38,7 +35,7 @@ public class Category {
         this.products = products;
     }
 
-    public Category() {
+    public Categories() {
     }
 
     public Long getCategory_id() {
@@ -83,7 +80,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" +
+        return "Categories{" +
                 "category_id=" + category_id +
                 ", title='" + title + '\'' +
                 ", logo='" + logo + '\'' +

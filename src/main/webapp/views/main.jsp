@@ -25,10 +25,12 @@
         </form>
     <form id="Registration" method="GET" action="${contextPath}registration">
     </form>
+    <form id="Cart" method="GET" action="${contextPath}cart">
+    </form>
     <form id="ShopLogo" method="GET" action="${contextPath}/">
     </form>
         <h1>
-            <a><a onclick="document.forms['ShopLogo'].submit()">Market Place</a> | Exquisite design by Viktor Kutin
+            <a><a onclick="document.forms['ShopLogo'].submit()">Market Place</a>
             </a>
         </h1>
         <h4>
@@ -49,26 +51,25 @@
                     </a>
                     </c:otherwise>
                     </c:choose>
-                    <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+                    <a onclick="document.forms['logoutForm'].submit()">Logout</a> |
                 </c:when>
                 <c:otherwise>
                     <a onclick="document.forms['SignIn'].submit()">Sign In</a> |
-                    <a onclick="document.forms['Registration'].submit()">Registration</a>
+                    <a onclick="document.forms['Registration'].submit()">Registration</a> |
                 </c:otherwise>
             </c:choose>
-
+            <a onclick="document.forms['Cart'].submit()">Cart</a>
         </h4>
 </div>
 
 
 
 <div class="container content">
-
     <div class="row">
         <div class="col-md-4">
             <div class="list-group">
-                <c:forEach var="category" items="${categories}">
-                    <a href="/${category.category_id}" class="list-group-item">${category.logo}</a>
+                <c:forEach var="categories" items="${categories}">
+                    <a href="/${categories.category_id}" class="list-group-item">${categories.logo}</a>
                 </c:forEach>
             </div>
         </div>

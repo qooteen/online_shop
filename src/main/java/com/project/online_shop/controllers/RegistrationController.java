@@ -1,26 +1,21 @@
 package com.project.online_shop.controllers;
 
+import com.project.online_shop.domain.Categories;
+import com.project.online_shop.domain.Manufacturers;
 import com.project.online_shop.domain.Products;
-import com.project.online_shop.domain.Roles;
 import com.project.online_shop.domain.Users;
-import com.project.online_shop.service.ProductsService;
-import com.project.online_shop.service.RolesService;
-import com.project.online_shop.service.UsersService;
-import com.project.online_shop.service.UsersServiceImpl;
+import com.project.online_shop.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.management.relation.Role;
-import java.security.Principal;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.*;
 
 @Controller
 public class RegistrationController {
@@ -30,6 +25,20 @@ public class RegistrationController {
     private UsersService usersService;
 
     private ProductsService productsService;
+
+    private CategoryService categoryService;
+
+    private ManufacturersService manufacturersService;
+
+    @Autowired
+    public void setManufacturersService(ManufacturersService manufacturersService) {
+        this.manufacturersService = manufacturersService;
+    }
+
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @Autowired
     public void setProductsService(ProductsService productsService) {
@@ -46,6 +55,8 @@ public class RegistrationController {
         this.rolesService = rolesService;
     }
 
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -83,14 +94,50 @@ public class RegistrationController {
     public String admin(Model model) {
         model.addAttribute("product", new Products());
 
+        Map<Categories, String> map = new HashMap<>();
+        List<Categories> categoriesList = categoryService.findAll();
+        for (Categories categories : categoriesList)
+            map.put(categories, categories.getLogo());
+
+        Map<Long, String> map2 = new HashMap<>();
+        List<Manufacturers> manufacturersList = manufacturersService.findAll();
+        for (Manufacturers manufacturers : manufacturersList)
+            map2.put(manufacturers.getManufacturer_id(), manufacturers.getLogo());
+
+        model.addAttribute("map", map);
+        model.addAttribute("map2", map2);
+
         return "admin";
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.POST)
-    public String adminPost(@ModelAttribute Products product, Model model) {
-        productsService.saveProduct(product);
-        model.addAttribute("product", product);
+    public String adminPost(@RequestParam(required = false) MultipartFile upload, @ModelAttribute Products product, Model model){
 
-        return "admin";
+
+        if (upload != null && !upload.getOriginalFilename().isEmpty()) {
+            File uploadDir = new File(uploadPath);
+
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFilename = uuidFile + "." + upload.getOriginalFilename();
+
+            try (FileOutputStream fos = new FileOutputStream(uploadPath + resultFilename)){
+                byte[] buffer = upload.getBytes();
+                fos.write(buffer, 0, buffer.length);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            product.setImage(resultFilename);
+        }
+
+        productsService.saveProduct(product);
+
+        model.addAttribute("product", product);
+        return "redirect:admin";
     }
 }
