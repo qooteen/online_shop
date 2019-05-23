@@ -1,5 +1,7 @@
 package com.project.online_shop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -18,22 +20,11 @@ public class Users {
     @Column(name = "password")
     private String password;
 
-    public String getConfirm() {
-        return confirm;
-    }
-
-    public void setConfirm(String confirm) {
-        this.confirm = confirm;
-    }
-
     @Column(name = "email", length = 50)
     private String email;
 
     @Column(name = "address", length = 100)
     private String address;
-
-    @Transient
-    transient private String confirm;
 
     @Column(name = "index", length = 50)
     private String index;
@@ -58,6 +49,7 @@ public class Users {
     @Column(name = "active")
     private Boolean active;
 
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")

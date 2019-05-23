@@ -62,9 +62,13 @@
             <a class="error">Cart is empty</a>
         </c:when>
         <c:otherwise>
-        <a>Total price:<a class="product-price"> ${total}</a></a>
+        <a>Total price:<a class="product-price"> ${total}</a></a> |
+            <c:if test="${pageContext.request.userPrincipal.name == null}">
+            <a>Continue buy<a class="product-price" href=""></a></a>
+            </c:if>
         </c:otherwise>
         </c:choose>
+
     </h4>
 </div>
 
@@ -85,7 +89,7 @@
                             <p class="product-price">${item.products.price}</p>
                             <form action="/cart/update/${item.products.product_id}" method="POST">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <p>Quantity: <input type="number" min="1" name="quantity" value="${item.quantity}"></p>
+                                <p>Quantity: <input type="number" min="1" max="${item.products.quantity}" name="quantity" value="${item.quantity}"></p>
                             </form>
                             <p class="product-price">${item.products.price * item.quantity}</p>
                         </div>

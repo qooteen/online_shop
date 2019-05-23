@@ -22,16 +22,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.authorizeRequests().antMatchers("/resources/**", "/registration", "/","/403", "/cart/**").permitAll();
         http.authorizeRequests().antMatchers("/admin").access("hasRole('ADMIN')").and().exceptionHandling().accessDeniedPage("/403");
+        http.csrf().disable().authorizeRequests().antMatchers("/update/*", "/update", "/show/*", "/show").permitAll();
+
         http.authorizeRequests()
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/")
                 .failureUrl("/login?error")
                 .and().logout().logoutSuccessUrl("/login?logout");
-
-
     }
 
     @Autowired

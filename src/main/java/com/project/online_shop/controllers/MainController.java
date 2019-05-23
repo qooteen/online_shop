@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/")
 public class MainController {
 
 
@@ -25,14 +26,14 @@ public class MainController {
         this.productsService = productsService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String mainPage(Model model) {
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("products", productsService.findAll());
         return "main";
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public String mainPagePost(@PathVariable Long id, Model model) {
 
         Categories categories = categoryService.getCategoryById(id);
@@ -41,5 +42,4 @@ public class MainController {
         model.addAttribute("categories", categoryService.findAll());
         return "main";
     }
-
 }

@@ -1,12 +1,14 @@
 package com.project.online_shop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "products")
 public class Products {
@@ -24,12 +26,26 @@ public class Products {
     @Column(name = "price")
     private Integer price;
 
+    @JsonIgnore
     @Column(name = "image", length = 50)
     private String image;
 
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    @JsonIgnore
     @Transient
     private MultipartFile upload;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "manufacturer_id")
     private Manufacturers manufacturer_id;
@@ -37,9 +53,10 @@ public class Products {
     @Column(name = "short_description")
     private String short_description;
 
-    @Column(name = "avalible")
-    private Boolean avalible;
+    @Column(name = "accessible")
+    private Boolean accessible;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "products")
     private Set<Orders> orders;
 
@@ -52,12 +69,12 @@ public class Products {
     }
 
     @OneToMany(mappedBy = "product_id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Products_properties> productsProperties = new HashSet<>();
+    private Set<Products_properties> productsProperties;
 
     @OneToMany(mappedBy = "product_id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Products_images> productsImages = new HashSet<>();
+    private Set<Products_images> productsImages;
 
-
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "products_categories", joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
@@ -155,12 +172,12 @@ public class Products {
         this.short_description = short_description;
     }
 
-    public Boolean getAvalible() {
-        return avalible;
+    public Boolean getAccessible() {
+        return accessible;
     }
 
-    public void setAvalible(Boolean avalible) {
-        this.avalible = avalible;
+    public void setAccessible(Boolean avalible) {
+        this.accessible = avalible;
     }
 
     @Override
@@ -171,9 +188,10 @@ public class Products {
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", image='" + image + '\'' +
+                ", quantity=" + quantity +
                 ", manufacturer_id=" + manufacturer_id +
                 ", short_description='" + short_description + '\'' +
-                ", avalible=" + avalible +
+                ", accessible=" + accessible +
                 '}';
     }
 }

@@ -25,7 +25,7 @@ public class Manufacturers {
     private String site;
 
     @OneToMany(mappedBy = "manufacturer_id", cascade = CascadeType.ALL)
-    private Set<Products> products = new HashSet<>();
+    private Set<Products> products;
 
     public Set<Products> getProducts() {
         return products;

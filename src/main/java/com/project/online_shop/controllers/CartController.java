@@ -9,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,11 +29,12 @@ public class CartController {
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model, HttpSession session) {
         model.addAttribute("total", summ(session));
+
         return "/cart/cart";
     }
 
     @RequestMapping(value = {"/buy/{id}"}, method = RequestMethod.GET)
-    public String cart(@PathVariable("id") Long id, HttpSession session) {
+    public String buy(@PathVariable("id") Long id, HttpSession session) {
        if (session.getAttribute("cart") == null) {
             List<Item> cart = new ArrayList<>();
             cart.add(new Item(productsService.getProductById(id), 1));
