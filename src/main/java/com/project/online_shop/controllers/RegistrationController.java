@@ -28,6 +28,7 @@ public class RegistrationController {
     public String registration(@ModelAttribute Users userForm, Model model) {
         Users users = usersService.findByUsername(userForm.getUsername());
         if (users == null) {
+
             usersService.saveUser(userForm);
             return "redirect:/login";
         }

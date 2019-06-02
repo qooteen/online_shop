@@ -24,8 +24,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/resources/**", "/registration", "/","/403", "/cart/**").permitAll();
         http.authorizeRequests().antMatchers("/admin").access("hasRole('ADMIN')").and().exceptionHandling().accessDeniedPage("/403");
-        http.authorizeRequests().antMatchers("/info").access("hasRole('USER')").and().exceptionHandling().accessDeniedPage("/403");
-        http.csrf().disable().authorizeRequests().antMatchers("/update/*", "/update", "/show/*", "/show").permitAll();
+        http.csrf().disable().authorizeRequests().antMatchers("/update/*").access("hasRole('ADMIN')").and().exceptionHandling().accessDeniedPage("/403");
+        http.authorizeRequests().antMatchers("/info").hasAnyRole("USER", "ADMIN").and().exceptionHandling().accessDeniedPage("/403");
+//        http.csrf().disable().authorizeRequests().antMatchers("/update/*", "/update", "/show/*", "/show").permitAll();
 
         http.authorizeRequests()
                 .and()

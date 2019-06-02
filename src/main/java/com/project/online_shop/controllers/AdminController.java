@@ -33,6 +33,9 @@ import java.util.UUID;
 @RequestMapping("/admin")
 public class AdminController {
 
+    @Value("${upload.path}")
+    private String uploadPath;
+
     private ProductsService productsService;
 
     private CategoryService categoryService;
@@ -54,19 +57,18 @@ public class AdminController {
         this.productsService = productsService;
     }
 
-    @Value("${upload.path}")
-    private String uploadPath;
-
     @RequestMapping(method = RequestMethod.GET)
-    public String admin(Model model) {
+    public String editPage(Model model) {
         model.addAttribute("product", new Products());
 
         Map<Categories, String> map = new HashMap<>();
+
         List<Categories> categoriesList = categoryService.findAll();
         for (Categories categories : categoriesList)
             map.put(categories, categories.getLogo());
 
         Map<Long, String> map2 = new HashMap<>();
+
         List<Manufacturers> manufacturersList = manufacturersService.findAll();
         for (Manufacturers manufacturers : manufacturersList)
             map2.put(manufacturers.getManufacturer_id(), manufacturers.getLogo());
@@ -78,30 +80,9 @@ public class AdminController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String adminPost(@RequestParam(required = false) MultipartFile upload, @ModelAttribute Products product, Model model){
+    public String editImage(@RequestParam MultipartFile upload, @ModelAttribute Products product, Model model){
 
-        if (upload != null && !upload.getOriginalFilename().isEmpty()) {
-            File uploadDir = new File(uploadPath);
-
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
-
-            String resultFilename = upload.getOriginalFilename();
-
-            try (FileOutputStream fos = new FileOutputStream(uploadPath + resultFilename)){
-                byte[] buffer = upload.getBytes();
-                fos.write(buffer, 0, buffer.length);
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            product.setImage(resultFilename);
-        }
-
-        productsService.saveProduct(product);
-
+        productsService.uploadImage(upload, uploadPath, product);
         model.addAttribute("product", product);
         return "redirect:admin";
     }

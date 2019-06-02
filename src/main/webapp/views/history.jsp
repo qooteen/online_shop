@@ -32,22 +32,17 @@
                 <form id="logoutForm" method="POST" action="${contextPath}logout">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
-                <c:choose>
+                <form id="helloForm" method="GET" action="${contextPath}/info">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                <a onclick="document.forms['helloForm'].submit()"> Hello ${pageContext.request.userPrincipal.name} |</a>
 
-                    <c:when test="${pageContext.request.isUserInRole('ADMIN')}">
-                        <form id="adminForm" method="GET" action="${contextPath}/admin">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        </form>
-                        <a onclick="document.forms['adminForm'].submit()">Admin Page</a> |
-                    </c:when>
-
-                    <c:otherwise>
-                        <form id="helloForm" method="GET" action="${contextPath}/info">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        </form>
-                        <a onclick="document.forms['helloForm'].submit()"> Hello ${pageContext.request.userPrincipal.name} |</a>
-                    </c:otherwise>
-                </c:choose>
+                <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
+                    <form id="adminForm" method="GET" action="${contextPath}/admin">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <a onclick="document.forms['adminForm'].submit()">Add New Item |</a>
+                </c:if>
                 <a onclick="document.forms['logoutForm'].submit()">Logout |</a>
             </c:when>
             <c:otherwise>

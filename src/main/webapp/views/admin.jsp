@@ -15,15 +15,15 @@
 
     <title>Admin</title>
 
-    <link href="${contextPath}resources/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${contextPath}resources/css/style.css">
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/resources/css/style.css">
 
 </head>
 
 <body>
 <div class="container">
 
-    <form id="ShopLogo" method="GET" action="${contextPath}/">
+    <form id="ShopLogo" method="GET" action="/">
     </form>
     <h1>
         <a onclick="document.forms['ShopLogo'].submit()">Market Place</a>
@@ -32,7 +32,7 @@
 
 <div class="container content">
 
-<form:form method="POST" modelAttribute="product" class="form-signin" enctype="multipart/form-data" action="${contextPath}/admin">
+<form:form method="POST" modelAttribute="product" class="form-signin" enctype="multipart/form-data" action="/admin">
     <h2 class="form-signin-heading">Add product</h2>
     <spring:bind path="title">
         <div>
@@ -56,6 +56,11 @@
             <form:input type="text" path="short_description" class="form-control" placeholder="Short description"></form:input>
         </div>
     </spring:bind>
+    <spring:bind path="quantity">
+        <div>
+            <form:input type="number" min="0" path="quantity" class="form-control" placeholder="Quantity"></form:input>
+        </div>
+    </spring:bind>
     <spring:bind path="accessible">
         <div>
             <p>Accessible <form:checkbox path="accessible"  placeholder="Accessible"></form:checkbox></p>
@@ -69,15 +74,14 @@
     </div>
     <div class="form-group">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <form:input  type="file" name="upload"  path="upload" class="form-control-file" ></form:input>
+        <form:input  type="file" name="upp" path="upload" class="form-control-file" ></form:input>
     </div>
-
     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
 </form:form>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}resources/js/bootstrap.min.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
 
 </body>
 </html>

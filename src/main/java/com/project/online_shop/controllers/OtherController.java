@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class ChangeController {
+public class OtherController {
 
     private ProductsService productsService;
     private ManufacturersService manufacturersService;
@@ -55,16 +55,18 @@ public class ChangeController {
     }
 
     @GetMapping(value = "/update/{id}")
-    public String up(@PathVariable("id") Long id, Map<String, Object> map) {
+    public String updatePage(@PathVariable("id") Long id, Map<String, Object> map) {
         Products products = productsService.getProductById(id);
         map.put("prod", products);
 
         Map<Categories, String> map1 = new HashMap<>();
+
         List<Categories> categoriesList = categoryService.findAll();
         for (Categories categories : categoriesList)
             map1.put(categories, categories.getLogo());
 
         Map<Long, String> map2 = new HashMap<>();
+
         List<Manufacturers> manufacturersList = manufacturersService.findAll();
         for (Manufacturers manufacturers : manufacturersList)
             map2.put(manufacturers.getManufacturer_id(), manufacturers.getLogo());
@@ -75,7 +77,7 @@ public class ChangeController {
     }
 
     @RequestMapping(value = {"/info"})
-    public String info(Model model) {
+    public String infoPage(Model model) {
         UserDetails userDetail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Users user = usersService.findByUsername(userDetail.getUsername());
         List<Orders> orders = ordersService.findAllByUser(user);

@@ -1,27 +1,31 @@
 package com.project.online_shop.controllers;
 
-import com.project.online_shop.domain.*;
-import com.project.online_shop.service.*;
+import com.project.online_shop.domain.Item;
+import com.project.online_shop.domain.Orders;
+import com.project.online_shop.domain.Products;
+import com.project.online_shop.domain.Products_buy;
+import com.project.online_shop.service.OrdersService;
+import com.project.online_shop.service.ProductsService;
+import com.project.online_shop.service.Products_buyService;
+import com.project.online_shop.service.UsersService;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
-import java.sql.Time;
 import java.time.LocalTime;
 import java.util.*;
 
 @Controller
 @RequestMapping("cart")
 public class CartController {
+
+    private Map<Long, String[]> map = new HashMap<>();
 
     private ProductsService productsService;
 
@@ -52,9 +56,9 @@ public class CartController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String index(Model model, HttpSession session) {
-        model.addAttribute("total", summ(session));
+    public String cart(Model model, HttpSession session) {
 
+        model.addAttribute("total", summ(session));
         return "/cart/cart";
     }
 
@@ -77,15 +81,11 @@ public class CartController {
            }
            session.setAttribute("cart", cart);
        }
-
         return "redirect:../../cart";
     }
 
-    private Map<Long, String[]> map = new HashMap<>();
-
-
     @RequestMapping(value = {"/remove/{id}"}, method = RequestMethod.GET)
-    public String remove(@PathVariable("id") Long id, HttpSession session) {
+    public String removeBuy(@PathVariable("id") Long id, HttpSession session) {
 
         List<Item> cart = (List<Item>) session.getAttribute("cart");
         int index = isExists(id, cart);
@@ -96,26 +96,29 @@ public class CartController {
     }
 
     @RequestMapping(value = {"/update/{id}"}, method = RequestMethod.POST)
-    public String update(@PathVariable("id") Long id, HttpServletRequest request, HttpSession session) {
-        if (map.containsKey(id))
-            map.remove(id);
-        map.put(id, request.getParameterValues("quantity"));
+    public String updateBuy(@PathVariable("id") Long id, HttpServletRequest request, HttpSession session) {
+
         List<Item> cart = (List<Item>) session.getAttribute("cart");
 
-        for (int i = 0; i < cart.size(); i++)
+        if (map.containsKey(id)) {
+            map.remove(id);
+        }
+
+        map.put(id, request.getParameterValues("quantity"));
+
+        for (Item item: cart)
         for (Map.Entry<Long, String[]> pair: map.entrySet()) {
-            if (pair.getKey() == id && cart.get(i).getProducts().getProduct_id() == id) {
-                cart.get(i).setQuantity(Integer.parseInt(pair.getValue()[0]));
+            if (pair.getKey() == id && item.getProducts().getProduct_id() == id) {
+                item.setQuantity(Integer.parseInt(pair.getValue()[0]));
                 break;
             }
         }
 
         session.setAttribute("cart", cart);
-
         return "redirect:../../cart";
     }
 
-    @RequestMapping(value = {""}, method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String order(HttpSession session) {
         List<Item> cart = (List<Item>) session.getAttribute("cart");
 
@@ -138,7 +141,6 @@ public class CartController {
                 products_buy.setQuantity(item.getQuantity());
                 products_buyService.saveProducts_buy(products_buy);
             }
-
 
             orders.setUser(usersService.findByUsername(userDetail.getUsername()));
             ordersService.saveOrder(orders);
