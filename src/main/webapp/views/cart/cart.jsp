@@ -50,7 +50,7 @@
                         </a>
                     </c:otherwise>
                 </c:choose>
-                <a onclick="document.forms['logoutForm'].submit()">Logout</a> |
+                <a onclick="document.forms['logoutForm'].submit()">Logout ${message}</a> |
             </c:when>
             <c:otherwise>
                 <a onclick="document.forms['SignIn'].submit()">Sign In</a> |
@@ -63,9 +63,10 @@
         </c:when>
         <c:otherwise>
         <a>Total price:<a class="product-price"> ${total}</a></a> |
-            <c:if test="${pageContext.request.userPrincipal.name == null}">
-            <a>Continue buy<a class="product-price" href=""></a></a>
-            </c:if>
+        <form id="ContinueBuy" method="POST" action="/cart">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+        <a><a onclick="document.forms['ContinueBuy'].submit()">Continue Buy</a>
         </c:otherwise>
         </c:choose>
 

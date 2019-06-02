@@ -87,8 +87,7 @@ public class AdminController {
                 uploadDir.mkdir();
             }
 
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFilename = uuidFile + "." + upload.getOriginalFilename();
+            String resultFilename = upload.getOriginalFilename();
 
             try (FileOutputStream fos = new FileOutputStream(uploadPath + resultFilename)){
                 byte[] buffer = upload.getBytes();

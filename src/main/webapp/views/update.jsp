@@ -104,8 +104,8 @@
 
 
 
-<form:form method="POST" modelAttribute="prod" class="form-signin" action="/update/${prod.product_id}">
-    <h2 class="form-signin-heading">Add product</h2>
+<form:form method="POST" modelAttribute="prod" class="form-signin" enctype="multipart/form-data" action="/update/${prod.product_id}">
+    <h2 class="form-signin-heading">Update product</h2>
     <spring:bind path="title">
         <div>
             <form:input type="text" path="title" id="title" name="title" class="form-control" placeholder="Title"
@@ -113,42 +113,50 @@
         </div>
 
     </spring:bind>
+
     <spring:bind path="price">
         <div>
             <form:input  type="text" id="price" name="price" path="price" class="form-control" placeholder="Price"></form:input>
         </div>
     </spring:bind>
+
     <spring:bind path="description">
         <div>
             <form:input  type="text" id="description" name="description" path="description" class="form-control" placeholder="Description"></form:input>
         </div>
     </spring:bind>
+
     <spring:bind path="short_description">
         <div>
             <form:input type="text" id="short_description" name="short_description" path="short_description" class="form-control" placeholder="Short description"></form:input>
         </div>
     </spring:bind>
+
     <spring:bind path="quantity">
         <div>
             <form:input type="text" id="quantity" name="quantity" path="quantity" class="form-control" placeholder="Quantity"></form:input>
         </div>
     </spring:bind>
+
     <spring:bind path="accessible">
         <div>
             <p>Accessible <form:checkbox id="accessible" name="accessible" path="accessible"  placeholder="Accessible"></form:checkbox></p>
         </div>
     </spring:bind>
-<%--    <div>--%>
-<%--        <p>Categories <form:select id="categories" name="categories" class="form-control" path="categories" multiple="true" items="${map}"/></p>--%>
-<%--    </div>--%>
-<%--    <div>--%>
-<%--        <p>Manufacture <form:select id="manufacturer_id" name="manufacturer_id" class="form-control" path="manufacturer_id" items="${map2}"/></p>--%>
-<%--    </div>--%>
-<%--    <div class="form-group">--%>
-<%--        <form:input  type="file" name="upload"  id="upload" path="upload" class="form-control-file" ></form:input>--%>
-<%--    </div>--%>
 
-    <button class="btn btn-lg btn-primary btn-block" onclick="postDataFromAPI();" type="submit">Submit</button>
+<%--    <spring:bind path="categories">--%>
+<%--        <p>Categories <form:select id="categories" name="categories" class="form-control" path="categories" multiple="true" items="${map}"/></p>--%>
+<%--    </spring:bind>--%>
+
+<%--    <spring:bind path="manufacturer_id">--%>
+<%--        <p>Manufacture <form:select id="manufacturer_id" name="manufacturer_id" class="form-control" path="manufacturer_id" items="${map2}"/></p>--%>
+<%--    </spring:bind>--%>
+
+    <div class="form-group">
+        <form:input type="file" name="file"  id="file" path="upload"  class="form-control-file" ></form:input>
+    </div>
+
+    <button href="/cart" class="btn btn-lg btn-primary btn-block" onclick="upp();postDataFromAPI();" type="submit">Submit</button>
 </form:form>
 </div>
 
@@ -165,8 +173,7 @@
             description: $("#description").val(),
             short_description: $("#short_description").val(),
             accessible: $("#accessible:checkbox:checked").val(),
-            quantity: $("#quantity").val.
-            // manufacturer_id: $("#manufacturer_id").val
+            quantity: $("#quantity").val(),
         };
 
         console.log("post data:"+modelObj);
@@ -184,6 +191,25 @@
             error: function (jqXHR, textStatus, errorThrown) {
             }
         });
+    }
+
+    function upp(){
+
+        var data = new FormData();
+        jQuery.each(jQuery("#file")[0].files, function(i, file) {
+            data.append('file-'+i, file);
+        });
+
+        $.ajax({
+            url:"/update/${prod.product_id}",
+            data: data,
+            cache: false,
+            async: false,
+            contentType: false,
+            processData: false,
+            type: "POST"
+        });
+
     }
 </script>
 </body>

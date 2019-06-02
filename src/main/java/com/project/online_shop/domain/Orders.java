@@ -14,30 +14,36 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long order_id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private Users user_id;
+    private Users user;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "order_date")
     private Date order_date;
 
-
     @Column(name = "order_time")
     private LocalTime order_time;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "products_orders", joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private Set<Products> products;
+    @OneToMany(mappedBy = "order_id", cascade = CascadeType.ALL)
+    private Set<Products_buy> products_buys;
 
-    public Set<Products> getProducts() {
-        return products;
+    public Set<Products_buy> getProducts_buys() {
+        return products_buys;
     }
 
-    public void setProducts(Set<Products> products) {
-        this.products = products;
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "order_id=" + order_id +
+                ", user_id=" + user +
+                ", order_date=" + order_date +
+                ", order_time=" + order_time +
+                '}';
+    }
+
+    public void setProducts_buys(Set<Products_buy> products_buys) {
+        this.products_buys = products_buys;
     }
 
     public Long getOrder_id() {
@@ -48,12 +54,12 @@ public class Orders {
         this.order_id = order_id;
     }
 
-    public Users getUser_id() {
-        return user_id;
+    public Users getUser() {
+        return user;
     }
 
-    public void setUser_id(Users user_id) {
-        this.user_id = user_id;
+    public void setUser(Users user) {
+        this.user = user;
     }
 
     public Date getOrder_date() {
@@ -72,13 +78,5 @@ public class Orders {
         this.order_time = order_time;
     }
 
-    @Override
-    public String toString() {
-        return "Orders{" +
-                "order_id=" + order_id +
-                ", user_id=" + user_id +
-                ", order_date=" + order_date +
-                ", order_time=" + order_time +
-                '}';
-    }
+
 }

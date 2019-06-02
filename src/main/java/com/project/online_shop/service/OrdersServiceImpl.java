@@ -1,5 +1,6 @@
 package com.project.online_shop.service;
 
+import com.project.online_shop.domain.Users;
 import com.project.online_shop.repository.OrdersRepository;
 import com.project.online_shop.domain.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +43,14 @@ public class OrdersServiceImpl implements OrdersService{
     public List<Orders> findAll() {
         return ordersRepository.findAll();
     }
-
+    @Transactional
     @Override
-    public int getMaxOrderId() {
-        return ordersRepository.getMaxOrderId();
+    public Long getMaxOrderId() {
+        return ordersRepository.getMaxOrderId() == null ? 0 : ordersRepository.getMaxOrderId();
     }
 
+    @Override
+    public List<Orders> findAllByUser(Users users) {
+        return ordersRepository.findAllByUser(users);
+    }
 }

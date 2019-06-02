@@ -7,11 +7,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Item {
+
     private Products products;
+
     private int quantity;
-
-
-
 
     public Products getProducts() {
         return products;

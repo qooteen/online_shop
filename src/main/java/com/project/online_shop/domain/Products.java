@@ -1,13 +1,13 @@
 package com.project.online_shop.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
-import java.io.File;
-import java.util.HashSet;
 import java.util.Set;
+
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "products")
@@ -26,7 +26,6 @@ public class Products {
     @Column(name = "price")
     private Integer price;
 
-    @JsonIgnore
     @Column(name = "image", length = 50)
     private String image;
 
@@ -41,11 +40,10 @@ public class Products {
         this.quantity = quantity;
     }
 
-    @JsonIgnore
     @Transient
     private MultipartFile upload;
 
-    @JsonIgnore
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "manufacturer_id")
     private Manufacturers manufacturer_id;
@@ -56,25 +54,9 @@ public class Products {
     @Column(name = "accessible")
     private Boolean accessible;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "products")
-    private Set<Orders> orders;
-
-    public Set<Orders> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Orders> orders) {
-        this.orders = orders;
-    }
-
     @OneToMany(mappedBy = "product_id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Products_properties> productsProperties;
 
-    @OneToMany(mappedBy = "product_id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Products_images> productsImages;
-
-    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "products_categories", joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
@@ -87,14 +69,6 @@ public class Products {
 
     public void setCategories(Set<Categories> categories) {
         this.categories = categories;
-    }
-
-    public Set<Products_images> getProductsImages() {
-        return productsImages;
-    }
-
-    public void setProductsImages(Set<Products_images> productsImages) {
-        this.productsImages = productsImages;
     }
 
     public Set<Products_properties> getProductsProperties() {
@@ -176,8 +150,8 @@ public class Products {
         return accessible;
     }
 
-    public void setAccessible(Boolean avalible) {
-        this.accessible = avalible;
+    public void setAccessible(Boolean accessible) {
+        this.accessible = accessible;
     }
 
     @Override

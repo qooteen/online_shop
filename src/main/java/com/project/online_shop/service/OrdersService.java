@@ -1,6 +1,9 @@
 package com.project.online_shop.service;
 
 import com.project.online_shop.domain.Orders;
+import com.project.online_shop.domain.Users;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 public interface OrdersService {
@@ -14,5 +17,9 @@ public interface OrdersService {
     void deleteOrder(Orders orders);
 
     List<Orders> findAll();
-    int getMaxOrderId();
+
+    @Transactional
+    Long getMaxOrderId();
+
+    List<Orders> findAllByUser(Users users);
 }

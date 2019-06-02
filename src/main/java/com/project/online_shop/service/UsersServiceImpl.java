@@ -1,5 +1,6 @@
 package com.project.online_shop.service;
 
+import com.project.online_shop.domain.Orders;
 import com.project.online_shop.domain.Roles;
 import com.project.online_shop.domain.Users;
 import com.project.online_shop.repository.RolesRepository;
@@ -7,6 +8,7 @@ import com.project.online_shop.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;

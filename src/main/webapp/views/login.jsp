@@ -15,10 +15,10 @@
 
     <title>Log in with your account</title>
 
-    <link href="${contextPath}resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}resources/css/common.css" rel="stylesheet">
-    <link rel="stylesheet" href="${contextPath}resources/css/style.css">
-    <link rel="stylesheet" href="${contextPath}resources/css/window.css">
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/common.css" rel="stylesheet">
+    <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="/resources/css/window.css">
 
 
 
@@ -58,6 +58,6 @@
     </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}resources/js/bootstrap.min.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

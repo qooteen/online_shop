@@ -21,9 +21,6 @@
 </head>
 
 <body>
-
-
-
 <div class="container">
 
     <form id="ShopLogo" method="GET" action="${contextPath}/">
@@ -59,9 +56,9 @@
             <form:input type="text" path="short_description" class="form-control" placeholder="Short description"></form:input>
         </div>
     </spring:bind>
-    <spring:bind path="avalible">
+    <spring:bind path="accessible">
         <div>
-            <p>Avalible <form:checkbox path="avalible"  placeholder="Avalible"></form:checkbox></p>
+            <p>Accessible <form:checkbox path="accessible"  placeholder="Accessible"></form:checkbox></p>
         </div>
     </spring:bind>
         <div>

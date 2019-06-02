@@ -38,6 +38,9 @@ public class Users {
     @Column(name = "phone", length = 50)
     private String phone;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Orders> orders;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "discount_id")
     private Discounts discount_id;
@@ -49,7 +52,6 @@ public class Users {
     @Column(name = "active")
     private Boolean active;
 
-    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
@@ -154,6 +156,14 @@ public class Users {
 
     public Set<Roles> getRoles() {
         return roles;
+    }
+
+    public Set<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Orders> orders) {
+        this.orders = orders;
     }
 
     public void setRoles(Set<Roles> roles) {

@@ -1,25 +1,50 @@
 package com.project.online_shop.controllers;
 
-import com.project.online_shop.domain.Item;
-import com.project.online_shop.service.ProductsService;
+import com.project.online_shop.domain.*;
+import com.project.online_shop.service.*;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.security.Principal;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.util.*;
 
 @Controller
 @RequestMapping("cart")
 public class CartController {
 
     private ProductsService productsService;
+
+    private Products_buyService products_buyService;
+
+    private UsersService usersService;
+
+    private OrdersService ordersService;
+
+    @Autowired
+    public void setProducts_buyService(Products_buyService products_buyService) {
+        this.products_buyService = products_buyService;
+    }
+
+    @Autowired
+    public void setUsersService(UsersService usersService) {
+        this.usersService = usersService;
+    }
+
+    @Autowired
+    public void setOrdersService(OrdersService ordersService) {
+        this.ordersService = ordersService;
+    }
 
     @Autowired
     public void setProductsService(ProductsService productsService) {
@@ -90,6 +115,44 @@ public class CartController {
         return "redirect:../../cart";
     }
 
+    @RequestMapping(value = {""}, method = RequestMethod.POST)
+    public String order(HttpSession session) {
+        List<Item> cart = (List<Item>) session.getAttribute("cart");
+
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser"))
+            return "login";
+
+        UserDetails userDetail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Orders orders = new Orders();
+
+        orders.setOrder_id(ordersService.getMaxOrderId() + 1);
+        orders.setOrder_date(new Date());
+        orders.setOrder_time(LocalTime.now());
+
+        if (cart != null && !cart.isEmpty()) {
+            for (Item item : cart) {
+                Products_buy products_buy = new Products_buy();
+                products_buy.setBuy_id(products_buyService.getMaxProducts_buyId() + 1);
+                products_buy.setProduct_id(item.getProducts());
+                products_buy.setOrder_id(orders);
+                products_buy.setQuantity(item.getQuantity());
+                products_buyService.saveProducts_buy(products_buy);
+            }
+
+
+            orders.setUser(usersService.findByUsername(userDetail.getUsername()));
+            ordersService.saveOrder(orders);
+
+            for (Item item : cart) {
+                Products tmp = productsService.getProductById(item.getProducts().getProduct_id());
+                tmp.setQuantity(tmp.getQuantity() - item.getQuantity());
+                productsService.updateProduct(tmp);
+            }
+
+            session.setAttribute("cart", null);
+        }
+        return "redirect:/cart";
+    }
 
     private int isExists(Long id, List<Item> cart) {
         for (int i = 0; i < cart.size(); i++) {

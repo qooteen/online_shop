@@ -14,8 +14,8 @@
 
         <title>Welcome</title>
 
-        <link href="${contextPath}resources/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="${contextPath}resources/css/style.css">
+        <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/resources/css/style.css">
     </head>
     <body>
         <div class="container">
@@ -42,7 +42,10 @@
                         </c:when>
 
                         <c:otherwise>
-                            <a> Hello ${pageContext.request.userPrincipal.name} |</a>
+                            <form id="helloForm" method="GET" action="${contextPath}/info">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+                            <a onclick="document.forms['helloForm'].submit()"> Hello ${pageContext.request.userPrincipal.name} |</a>
                         </c:otherwise>
                     </c:choose>
                         <a onclick="document.forms['logoutForm'].submit()">Logout |</a>
@@ -93,6 +96,6 @@
             </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="${contextPath}resources/js/bootstrap.min.js"></script>
+        <script src="$/resources/js/bootstrap.min.js"></script>
     </body>
 </html>

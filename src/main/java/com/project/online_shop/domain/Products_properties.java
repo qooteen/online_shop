@@ -16,9 +16,6 @@ public class Products_properties {
     @Column(name = "value", length = 50)
     private String value;
 
-    @Column(name = "quantity")
-    private Integer quantity;
-
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Products product_id;
@@ -50,14 +47,6 @@ public class Products_properties {
         this.value = value;
     }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
     public Products getProduct_id() {
         return product_id;
     }
@@ -72,7 +61,6 @@ public class Products_properties {
                 "products_property_id=" + products_property_id +
                 ", title='" + title + '\'' +
                 ", value='" + value + '\'' +
-                ", quantity=" + quantity +
                 ", product_id=" + product_id +
                 '}';
     }
