@@ -16,6 +16,8 @@
 
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="/resources/css/close.css">
+
 </head>
 <body>
 <div class="container">
@@ -35,50 +37,52 @@
                 <form id="helloForm" method="GET" action="${contextPath}/info">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
+                <a onclick="document.forms['helloForm'].submit()"> Hello ${pageContext.request.userPrincipal.name} |</a>
+
                 <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
                     <form id="adminForm" method="GET" action="${contextPath}/admin">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </form>
-                    <button type="button" class="btn btn-primary btn" onclick="document.forms['adminForm'].submit()">Add New Item</button>
+                    <a onclick="document.forms['adminForm'].submit()">Add New Item |</a>
                 </c:if>
-                <button type="button" class="btn btn-primary btn" onclick="document.forms['helloForm'].submit()"> Hello ${pageContext.request.userPrincipal.name}</button>
-                <button type="button" class="btn btn-primary btn" onclick="document.forms['logoutForm'].submit()">Logout</button>
+                <a onclick="document.forms['logoutForm'].submit()">Logout |</a>
             </c:when>
             <c:otherwise>
-                <button type="button" class="btn btn-primary btn" onclick="document.forms['SignIn'].submit()">Sign In</button>
-                <button type="button" class="btn btn-primary btn" onclick="document.forms['Registration'].submit()">Registration</button>
+                <a onclick="document.forms['SignIn'].submit()">Sign In |</a>
+                <a onclick="document.forms['Registration'].submit()">Registration |</a>
             </c:otherwise>
         </c:choose>
 
-        <button type="button" class="btn btn-primary btn" onclick="document.forms['Cart'].submit()">Cart</button>
+        <a onclick="document.forms['Cart'].submit()">Cart</a>
     </h4>
 </div>
 <div class="container content">
-    <c:forEach items="${orders}" var="order">
-        <div class="row">
-            <p class="product-price">Order Number: ${order.order_id} | Order date: ${order.order_date} | Order time: ${order.order_time}</p>
+    <div class="row">
+        <div class="col-md-8 products">
+            <div class="row">
+                    <div class="col-sm-4">
+                        <form method="GET" action="/show/${products.product_id}" >
+                            <div class="product-img">
+                                <a><img src="/resources/img/${products.image}" alt=""></a>
+                            </div>
+                            <p class="product-title"><a>${products.title}</a></p>
+                            <p class="product-desc">${products.short_description}</p>
+                            <c:if test="${products.quantity > 0}">
+                                <p class="product-price">${prod.price}</p>
+                                <p class="product-add"><a href="/cart/buy/${products.product_id}">Buy Now</a></p>
+                            </c:if>
+                            <c:if test="${products.quantity == 0}">
+                                <p class="product-price">Is out of stock</p>
+                            </c:if>
+                        <p class="product-desc">${products.description}</p>
+                        <p class="product-desc">${products.quantity}</p>
+                        <p class="product-desc">${products.manufacturer_id.title}</p>
+                        <p class="product-desc">${products.manufacturer_id.site}</p>
+                        </form>
+                    </div>
+            </div>
         </div>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Short Description</th>
-            <th scope="col">Price</th>
-            <th scope="col">Quantity</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${order.products_buys}" var="prod_buy">
-        <tr>
-            <td>${prod_buy.title}</td>
-            <td>${prod_buy.short_description}</td>
-            <td>${prod_buy.price}</td>
-            <td>${prod_buy.quantity}</td>
-        </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-    </c:forEach>
+    </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="$/resources/js/bootstrap.min.js"></script>

@@ -23,5 +23,5 @@ public interface ProductsService {
 
     Set<Products> findByCategories(Set<Categories> categories);
 
-    public void uploadImage(MultipartFile upload, String uploadPath, Products product);
+    void uploadImage(MultipartFile upload, String uploadPath, Products product);
 }

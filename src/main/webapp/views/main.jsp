@@ -16,6 +16,8 @@
 
         <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="/resources/css/style.css">
+        <link rel="stylesheet" href="/resources/css/close.css">
+
     </head>
     <body>
         <div class="container">
@@ -35,23 +37,22 @@
                         <form id="helloForm" method="GET" action="${contextPath}/info">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form>
-                        <a onclick="document.forms['helloForm'].submit()"> Hello ${pageContext.request.userPrincipal.name} |</a>
-
                         <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
                             <form id="adminForm" method="GET" action="${contextPath}/admin">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
-                            <a onclick="document.forms['adminForm'].submit()">Add New Item |</a>
+                            <button type="button" class="btn btn-primary btn" onclick="document.forms['adminForm'].submit()">Add New Item</button>
                         </c:if>
-                        <a onclick="document.forms['logoutForm'].submit()">Logout |</a>
+                        <button type="button" class="btn btn-primary btn" onclick="document.forms['helloForm'].submit()"> Hello ${pageContext.request.userPrincipal.name}</button>
+                        <button type="button" class="btn btn-primary btn" onclick="document.forms['logoutForm'].submit()">Logout</button>
                     </c:when>
                     <c:otherwise>
-                        <a onclick="document.forms['SignIn'].submit()">Sign In |</a>
-                        <a onclick="document.forms['Registration'].submit()">Registration |</a>
+                        <button type="button" class="btn btn-primary btn" onclick="document.forms['SignIn'].submit()">Sign In</button>
+                        <button type="button" class="btn btn-primary btn" onclick="document.forms['Registration'].submit()">Registration</button>
                     </c:otherwise>
                 </c:choose>
 
-                <a onclick="document.forms['Cart'].submit()">Cart</a>
+                <button type="button" class="btn btn-primary btn" onclick="document.forms['Cart'].submit()">Cart</button>
             </h4>
         </div>
         <div class="container content">
@@ -59,7 +60,7 @@
                 <div class="col-md-4">
                     <div class="list-group">
                         <c:forEach var="categories" items="${categories}">
-                            <a href="/${categories.category_id}" class="list-group-item">${categories.logo}</a>
+                            <a href="/${categories.category_id}" class="list-group-item list-group-item-action">${categories.logo}</a>
                         </c:forEach>
                     </div>
                 </div>
@@ -67,21 +68,31 @@
                     <div class="row">
                         <c:forEach var="prod" items="${products}">
                         <div class="col-sm-4">
-                            <div class="product">
+                            <div class="product2">
+                                <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
+                                    <form id="Close${prod.product_id}" method="POST" action="/remove/${prod.product_id}">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <a class="close" onclick="document.forms['Close${prod.product_id}'].submit()"></a>
+                                    </form>
+                                </c:if>
                                 <div class="product-img">
-                                    <a href="/show/${prod.product_id}"><img src="${contextPath}resources/img/${prod.image}" alt=""></a>
+                                    <a href="/show/${prod.product_id}"><img src="/resources/img/${prod.image}" alt=""></a>
                                 </div>
-                                <p class="product-title"><a href="#">${prod.title}</a></p>
+                                <p class="product-title"><strong>${prod.title}</strong></p>
                                 <p class="product-desc">${prod.short_description}</p>
-                                <c:if test="${prod.quantity > 0}">
+                                <c:if test="${prod.quantity > 0 && prod.accessible}">
                                     <p class="product-price">${prod.price}</p>
                                     <p class="product-add"><a href="/cart/buy/${prod.product_id}">Buy Now</a></p>
+
                                 </c:if>
-                                <c:if test="${prod.quantity == 0}">
+                                <c:if test="${prod.quantity == 0 && prod.accessible}">
                                     <p class="product-price">Is out of stock</p>
                                 </c:if>
+                                <c:if test="${!prod.accessible}">
+                                    <p class="product-price">Unavailable</p>
+                                </c:if>
                                 <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
-                                    <p class="product-add"><a href="/update/${prod.product_id}">Edit</a></p>
+                                        <a class="product-price" href="/update/${prod.product_id}">Edit</a>
                                 </c:if>
                             </div>
                         </div>

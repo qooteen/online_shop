@@ -136,7 +136,11 @@ public class CartController {
             for (Item item : cart) {
                 Products_buy products_buy = new Products_buy();
                 products_buy.setBuy_id(products_buyService.getMaxProducts_buyId() + 1);
-                products_buy.setProduct_id(item.getProducts());
+                products_buy.setProduct_id(item.getProducts().getProduct_id());
+                products_buy.setPrice(item.getProducts().getPrice());
+                products_buy.setDescription(item.getProducts().getDescription());
+                products_buy.setTitle(item.getProducts().getTitle());
+                products_buy.setShort_description(item.getProducts().getShort_description());
                 products_buy.setOrder_id(orders);
                 products_buy.setQuantity(item.getQuantity());
                 products_buyService.saveProducts_buy(products_buy);

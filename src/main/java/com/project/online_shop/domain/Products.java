@@ -45,7 +45,7 @@ public class Products {
     private MultipartFile upload;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "manufacturer_id")
     private Manufacturers manufacturer_id;
 
@@ -56,11 +56,11 @@ public class Products {
     private Boolean accessible;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "product_id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product_id", cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Products_properties> productsProperties;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name = "products_categories", joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )

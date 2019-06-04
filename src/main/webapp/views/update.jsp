@@ -33,6 +33,32 @@
     <h1>
         <a onclick="document.forms['ShopLogo'].submit()">Market Place</a>
     </h1>
+    <h4>
+        <c:choose>
+            <c:when test="${pageContext.request.userPrincipal.name!= null}">
+                <form id="logoutForm" method="POST" action="${contextPath}logout">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                <form id="helloForm" method="GET" action="${contextPath}/info">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
+                    <form id="adminForm" method="GET" action="${contextPath}/admin">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <button type="button" class="btn btn-primary btn" onclick="document.forms['adminForm'].submit()">Add New Item</button>
+                </c:if>
+                <button type="button" class="btn btn-primary btn" onclick="document.forms['helloForm'].submit()"> Hello ${pageContext.request.userPrincipal.name}</button>
+                <button type="button" class="btn btn-primary btn" onclick="document.forms['logoutForm'].submit()">Logout</button>
+            </c:when>
+            <c:otherwise>
+                <button type="button" class="btn btn-primary btn" onclick="document.forms['SignIn'].submit()">Sign In</button>
+                <button type="button" class="btn btn-primary btn" onclick="document.forms['Registration'].submit()">Registration</button>
+            </c:otherwise>
+        </c:choose>
+
+        <button type="button" class="btn btn-primary btn" onclick="document.forms['Cart'].submit()">Cart</button>
+    </h4>
 </div>
 
 

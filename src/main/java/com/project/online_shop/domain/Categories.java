@@ -25,9 +25,6 @@ public class Categories {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "image")
-    private String image;
-
     @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
     private Set<Products> products;
 
@@ -74,14 +71,6 @@ public class Categories {
         this.description = description;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     @Override
     public String toString() {
         return "Categories{" +
@@ -89,7 +78,6 @@ public class Categories {
                 ", title='" + title + '\'' +
                 ", logo='" + logo + '\'' +
                 ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
                 '}';
     }
 }

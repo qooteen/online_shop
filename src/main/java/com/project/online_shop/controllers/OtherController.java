@@ -8,10 +8,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,14 +19,13 @@ import java.util.Map;
 @Controller
 public class OtherController {
 
+    @Value("${upload.path}")
+    private String uploadPath;
+
     private ProductsService productsService;
     private ManufacturersService manufacturersService;
     private CategoryService categoryService;
-
-
     private UsersService usersService;
-
-
     private OrdersService ordersService;
 
     @Autowired
@@ -74,6 +73,32 @@ public class OtherController {
         map.put("map", map1);
         map.put("map2", map2);
         return "update";
+    }
+
+    @PostMapping(value = "/update/{id}")
+    public String updatePic(@PathVariable("id") Long id, @ModelAttribute Products prod) {
+        Products products = productsService.getProductById(id);
+        products.setManufacturer_id(prod.getManufacturer_id());
+        products.setCategories(prod.getCategories());
+        productsService.saveProduct(products);
+        MultipartFile upload = prod.getUpload();
+
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdir();
+        }
+
+        if (upload != null && !upload.getOriginalFilename().isEmpty()) {
+            File[] files = uploadDir.listFiles();
+            if (files != null && files.length != 0)
+                for (File file : files)
+                    if (file.getName().equals(products.getImage())) {
+                        file.delete();
+                        break;
+                    }
+            productsService.uploadImage(upload, uploadPath, products);
+        }
+        return "redirect:/";
     }
 
     @RequestMapping(value = {"/info"})

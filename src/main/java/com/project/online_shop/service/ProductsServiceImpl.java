@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Service("productsService")
 public class ProductsServiceImpl implements ProductsService{
@@ -67,7 +68,7 @@ public class ProductsServiceImpl implements ProductsService{
                 uploadDir.mkdir();
             }
 
-            String resultFilename = upload.getOriginalFilename();
+            String resultFilename = UUID.randomUUID() + "." + upload.getOriginalFilename();
 
             try (FileOutputStream fos = new FileOutputStream(uploadPath + resultFilename)){
                 byte[] buffer = upload.getBytes();

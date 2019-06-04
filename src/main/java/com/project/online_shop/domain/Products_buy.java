@@ -10,9 +10,20 @@ public class Products_buy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long buy_id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
-    private Products product_id;
+    @Column(name = "product_id")
+    private Long product_id;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "short_description")
+    private String short_description;
+
+    @Column(name = "price")
+    private Integer price;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
@@ -32,14 +43,6 @@ public class Products_buy {
         this.buy_id = buy_id;
     }
 
-    public Products getProduct_id() {
-        return product_id;
-    }
-
-    public void setProduct_id(Products product_id) {
-        this.product_id = product_id;
-    }
-
     public Orders getOrder_id() {
         return order_id;
     }
@@ -56,11 +59,55 @@ public class Products_buy {
         this.quantity = quantity;
     }
 
+    public Long getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(Long product_id) {
+        this.product_id = product_id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getShort_description() {
+        return short_description;
+    }
+
+    public void setShort_description(String short_description) {
+        this.short_description = short_description;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Products_buy{" +
                 "buy_id=" + buy_id +
                 ", product_id=" + product_id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", short_description='" + short_description + '\'' +
+                ", price=" + price +
                 ", order_id=" + order_id +
                 ", quantity=" + quantity +
                 '}';

@@ -38,35 +38,33 @@
                 <form id="logoutForm" method="POST" action="${contextPath}logout">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
-                <c:choose>
-                    <c:when test="${pageContext.request.isUserInRole('ADMIN')}">
-                        <form id="adminForm" method="GET" action="${contextPath}/admin">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        </form>
-                        <a onclick="document.forms['adminForm'].submit()">Admin Page</a> |
-                    </c:when>
-                    <c:otherwise>
-                        <a> Hello ${pageContext.request.userPrincipal.name} |
-                        </a>
-                    </c:otherwise>
-                </c:choose>
-                <a onclick="document.forms['logoutForm'].submit()">Logout ${message}</a> |
+                <form id="helloForm" method="GET" action="${contextPath}/info">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
+                    <form id="adminForm" method="GET" action="${contextPath}/admin">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <button type="button" class="btn btn-primary btn" onclick="document.forms['adminForm'].submit()">Add New Item</button>
+                </c:if>
+                <button type="button" class="btn btn-primary btn" onclick="document.forms['helloForm'].submit()"> Hello ${pageContext.request.userPrincipal.name}</button>
+                <button type="button" class="btn btn-primary btn" onclick="document.forms['logoutForm'].submit()">Logout ${message}</button>
             </c:when>
             <c:otherwise>
-                <a onclick="document.forms['SignIn'].submit()">Sign In</a> |
-                <a onclick="document.forms['Registration'].submit()">Registration</a> |
+                <button type="button" class="btn btn-primary btn" onclick="document.forms['SignIn'].submit()">Sign In</button>
+                <button type="button" class="btn btn-primary btn" onclick="document.forms['Registration'].submit()">Registration</button>
             </c:otherwise>
         </c:choose>
         <c:choose>
         <c:when test="${total == 0}">
-            <a class="error">Cart is empty</a>
+            <p class="title">Cart is empty</p>
         </c:when>
         <c:otherwise>
-        <a>Total price:<a class="product-price"> ${total}</a></a> |
+            <button type="button" class="btn btn-primary btn" onclick="document.forms['ContinueBuy'].submit()">Continue Buy</button>
+            <p class="title">Total price:<p class="product-price"> ${total}</p></p>
         <form id="ContinueBuy" method="POST" action="/cart">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-        <a><a onclick="document.forms['ContinueBuy'].submit()">Continue Buy</a>
         </c:otherwise>
         </c:choose>
 
@@ -82,10 +80,10 @@
                         <div class="product2" >
                             <a class="close" href="/cart/remove/${item.products.product_id}"></a>
                             <div class="product-img">
-                                <a href="#"><img src="/resources/img/${item.products.image}" alt=""></a>
+                                <a><img src="/resources/img/${item.products.image}" alt=""></a>
                             </div>
 
-                            <p class="product-title"><a href="#">${item.products.title}</a></p>
+                            <p class="product-title"><strong>${item.products.title}</strong></p>
                             <p class="product-desc">${item.products.short_description}</p>
                             <p class="product-price">${item.products.price}</p>
                             <form action="/cart/update/${item.products.product_id}" method="POST">
