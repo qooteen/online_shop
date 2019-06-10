@@ -1,6 +1,5 @@
 package com.project.online_shop.controllers;
 
-import com.project.online_shop.config.ControllerUtils;
 import com.project.online_shop.domain.Users;
 import com.project.online_shop.service.UsersService;
 import com.project.online_shop.validator.UserValidator;
@@ -9,13 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import javax.validation.Valid;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/registration")

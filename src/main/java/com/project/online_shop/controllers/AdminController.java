@@ -3,15 +3,12 @@ package com.project.online_shop.controllers;
 import com.project.online_shop.domain.Categories;
 import com.project.online_shop.domain.Manufacturers;
 import com.project.online_shop.domain.Products;
-import com.project.online_shop.domain.Users;
 import com.project.online_shop.service.CategoryService;
 import com.project.online_shop.service.ManufacturersService;
 import com.project.online_shop.service.ProductsService;
 import com.project.online_shop.validator.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,16 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import sun.plugin.liveconnect.SecurityContextHelper;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/admin")

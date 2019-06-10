@@ -9,14 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.BASE64Decoder;
-
-import javax.imageio.ImageIO;
-import javax.swing.text.html.Option;
-import java.io.*;
-import java.util.*;
-
-import static java.util.Optional.ofNullable;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.UUID;
 
 @RestController
 public class RestUpdateController {
