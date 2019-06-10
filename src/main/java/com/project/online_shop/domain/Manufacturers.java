@@ -34,7 +34,7 @@ public class Manufacturers {
     @Column(name = "site", length = 100)
     private String site;
 
-    @OneToMany(mappedBy = "manufacturer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "manufacturer", cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Products> products;
 
     public Set<Products> getProducts() {

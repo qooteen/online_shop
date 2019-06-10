@@ -2,6 +2,7 @@ package com.project.online_shop.service;
 
 import com.project.online_shop.domain.Categories;
 import com.project.online_shop.domain.Products;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -25,5 +26,6 @@ public interface ProductsService {
 
     void uploadImage(MultipartFile upload, String uploadPath, Products product);
 
+    @Transactional
     void deleteImage(String uploadPath, Products products);
 }

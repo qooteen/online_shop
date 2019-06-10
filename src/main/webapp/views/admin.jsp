@@ -43,7 +43,7 @@
     </spring:bind>
     <spring:bind path="price">
         <div>
-            <form:input  type="text" path="price" class="form-control" placeholder="Price"></form:input>
+            <form:input  type="number" min="1" path="price" class="form-control" placeholder="Price"></form:input>
         </div>
     </spring:bind>
     <spring:bind path="description">
@@ -70,11 +70,12 @@
             <p>Categories <form:select class="form-control" path="categories" items="${map}"/></p>
         </div>
     <div>
-        <p>Manufacture <form:select class="form-control" path="manufacturer" items="${map2}"/></p>
+        <p>Manufacture <form:select  class="form-control" path="manufacturer" items="${map2}"/></p>
     </div>
     <div class="form-group">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <form:input  type="file" name="upp" path="upload" class="form-control-file" ></form:input>
+        <form:input  type="file" id="upp" name="upp" accept=".jpg, .jpeg, .png" onchange="previewFile()" path="upload" class="form-control-file" ></form:input>
+        <img src="" id="image" height="200" alt="Image preview...">
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
 </form:form>
@@ -83,5 +84,22 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 
+<script>
+    function previewFile() {
+        var preview = document.querySelector('img');
+        var file = document.getElementById("upp").files[0];
+        var reader  = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }
+</script>
 </body>
 </html>

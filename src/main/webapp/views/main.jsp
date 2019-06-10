@@ -88,7 +88,7 @@
                                     <p class="product-add"><a href="/cart/buy/${prod.product_id}">Buy Now</a></p>
 
                                 </c:if>
-                                <c:if test="${prod.quantity == 0 && prod.accessible}">
+                                <c:if test="${(prod.quantity == 0 || prod.quantity == null) && prod.accessible}">
                                     <p class="product-price">Is out of stock</p>
                                 </c:if>
                                 <c:if test="${!prod.accessible}">

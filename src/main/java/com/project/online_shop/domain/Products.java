@@ -42,7 +42,7 @@ public class Products {
     @Transient
     private MultipartFile upload;
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "manufacturer")
     private Manufacturers manufacturer;
 
@@ -52,10 +52,10 @@ public class Products {
     @Column(name = "accessible")
     private Boolean accessible;
 
-    @OneToMany(mappedBy = "product_id", cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product_id", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Products_properties> productsProperties;
 
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "products_categories", joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )

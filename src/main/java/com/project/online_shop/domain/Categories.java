@@ -29,7 +29,7 @@ public class Categories {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "categories", cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Products> products;
 
     public Set<Products> getProducts() {

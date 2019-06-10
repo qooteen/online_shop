@@ -5,6 +5,7 @@ import com.project.online_shop.repository.ProductsRepository;
 import com.project.online_shop.domain.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -40,6 +41,7 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     @Override
+    @Transactional
     public void deleteProduct(Products products) {
         productsRepository.delete(products);
     }
