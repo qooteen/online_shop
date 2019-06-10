@@ -7,13 +7,12 @@ import com.project.online_shop.service.CategoryService;
 import com.project.online_shop.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.util.List;
 
 @Controller
@@ -57,18 +56,7 @@ public class MainController {
     public String mainDelete(@PathVariable Long id, HttpSession session) {
         Products products = productsService.getProductById(id);
 
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdir();
-        }
-
-        File[] files = uploadDir.listFiles();
-        if (files != null && files.length != 0)
-            for (File file : files)
-                if (file.getName().equals(products.getImage())) {
-                    file.delete();
-                    break;
-                }
+        productsService.deleteImage(uploadPath, products);
 
         productsService.deleteProduct(products);
         List<Item> cart = (List<Item>) session.getAttribute("cart");

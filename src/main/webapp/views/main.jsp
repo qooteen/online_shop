@@ -68,7 +68,7 @@
                     <div class="row">
                         <c:forEach var="prod" items="${products}">
                         <div class="col-sm-4">
-                            <div class="product2">
+                            <div class="product">
                                 <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
                                     <form id="Close${prod.product_id}" method="POST" action="/remove/${prod.product_id}">
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -76,7 +76,10 @@
                                     </form>
                                 </c:if>
                                 <div class="product-img">
-                                    <a href="/show/${prod.product_id}"><img src="/resources/img/${prod.image}" alt=""></a>
+                                    <form id="Img${prod.product_id}" method="GET" action="/show/${prod.product_id}">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <a onclick="document.forms['Img${prod.product_id}'].submit()"><img src="/resources/img/${prod.image}"></a>
+                                    </form>
                                 </div>
                                 <p class="product-title"><strong>${prod.title}</strong></p>
                                 <p class="product-desc">${prod.short_description}</p>
@@ -102,6 +105,6 @@
             </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="$/resources/js/bootstrap.min.js"></script>
+        <script src="/resources/js/bootstrap.min.js"></script>
     </body>
 </html>

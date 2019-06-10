@@ -70,7 +70,7 @@
             <p>Categories <form:select class="form-control" path="categories" items="${map}"/></p>
         </div>
     <div>
-        <p>Manufacture <form:select class="form-control" path="manufacturer_id" items="${map2}"/></p>
+        <p>Manufacture <form:select class="form-control" path="manufacturer" items="${map2}"/></p>
     </div>
     <div class="form-group">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

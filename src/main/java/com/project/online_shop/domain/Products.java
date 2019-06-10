@@ -1,13 +1,11 @@
 package com.project.online_shop.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import java.util.Set;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "product_id")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "products")
@@ -44,10 +42,9 @@ public class Products {
     @Transient
     private MultipartFile upload;
 
-    @JsonIgnore
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "manufacturer_id")
-    private Manufacturers manufacturer_id;
+    @JoinColumn(name = "manufacturer")
+    private Manufacturers manufacturer;
 
     @Column(name = "short_description")
     private String short_description;
@@ -55,11 +52,9 @@ public class Products {
     @Column(name = "accessible")
     private Boolean accessible;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "product_id", cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Products_properties> productsProperties;
 
-    @JsonIgnore
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name = "products_categories", joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
@@ -133,12 +128,12 @@ public class Products {
         this.image = image;
     }
 
-    public Manufacturers getManufacturer_id() {
-        return manufacturer_id;
+    public Manufacturers getManufacturer() {
+        return manufacturer;
     }
 
-    public void setManufacturer_id(Manufacturers manufacturer_id) {
-        this.manufacturer_id = manufacturer_id;
+    public void setManufacturer(Manufacturers manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
     public String getShort_description() {
@@ -166,7 +161,7 @@ public class Products {
                 ", price=" + price +
                 ", image='" + image + '\'' +
                 ", quantity=" + quantity +
-                ", manufacturer_id=" + manufacturer_id +
+                ", manufacturer=" + manufacturer +
                 ", short_description='" + short_description + '\'' +
                 ", accessible=" + accessible +
                 '}';

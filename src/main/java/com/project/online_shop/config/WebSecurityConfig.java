@@ -14,6 +14,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
+    private AuthenticationEntryPoint authEntryPoint;
+
+    @Autowired
+    public void setAuthEntryPoint(AuthenticationEntryPoint authEntryPoint) {
+        this.authEntryPoint = authEntryPoint;
+    }
 
     @Autowired
     public void setUserDetailsService(UserDetailsService userDetailsService) {
@@ -22,17 +28,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/resources/**", "/registration", "/","/403", "/cart/**").permitAll();
-        http.authorizeRequests().antMatchers("/admin", "/remove/*").access("hasRole('ADMIN')").and().exceptionHandling().accessDeniedPage("/403");
-        http.csrf().disable().authorizeRequests().antMatchers("/update/*").access("hasRole('ADMIN')").and().exceptionHandling().accessDeniedPage("/403");
-        http.authorizeRequests().antMatchers("/info").hasAnyRole("USER", "ADMIN").and().exceptionHandling().accessDeniedPage("/403");
-//        http.csrf().disable().authorizeRequests().antMatchers("/update/*", "/update", "/show/*", "/show").permitAll();
+        http.authorizeRequests()
+                .antMatchers("/resources/**", "/registration", "/","/403", "/cart/**", "/show")
+                .permitAll();
+
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/admin", "/remove/*", "/update/*").access("hasRole('ADMIN')")
+                .and()
+                .httpBasic()
+                .authenticationEntryPoint(authEntryPoint)
+                .and()
+                .exceptionHandling().accessDeniedPage("/403");
+
+        http.authorizeRequests()
+                .antMatchers("/info").hasAnyRole("USER", "ADMIN")
+                .and()
+                .exceptionHandling().accessDeniedPage("/403");
 
         http.authorizeRequests()
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/")
                 .failureUrl("/login?error")
-                .and().logout().logoutSuccessUrl("/login?logout");
+                .and()
+                .logout().logoutSuccessUrl("/login?logout");
     }
 
     @Autowired

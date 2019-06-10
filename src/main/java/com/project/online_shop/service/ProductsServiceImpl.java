@@ -81,4 +81,19 @@ public class ProductsServiceImpl implements ProductsService{
             productsRepository.save(product);
         }
     }
+    @Override
+    public void deleteImage(String uploadPath, Products products) {
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdir();
+        }
+
+        File[] files = uploadDir.listFiles();
+        if (files != null && files.length != 0)
+            for (File file : files)
+                if (file.getName().equals(products.getImage())) {
+                    file.delete();
+                    break;
+                }
+    }
 }

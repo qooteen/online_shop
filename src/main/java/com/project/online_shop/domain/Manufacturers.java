@@ -1,13 +1,19 @@
 package com.project.online_shop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.project.online_shop.service.EntityIdResolver;
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "manufacturer_id",
+        resolver = EntityIdResolver.class,
+        scope = Manufacturers.class)
 @Entity
 @Table(name = "manufacturers")
 public class Manufacturers {
@@ -28,7 +34,7 @@ public class Manufacturers {
     @Column(name = "site", length = 100)
     private String site;
 
-    @OneToMany(mappedBy = "manufacturer_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "manufacturer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Products> products;
 
     public Set<Products> getProducts() {

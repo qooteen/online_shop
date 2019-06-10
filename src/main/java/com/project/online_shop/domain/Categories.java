@@ -1,13 +1,17 @@
 package com.project.online_shop.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
+import com.project.online_shop.service.EntityIdResolver;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "category_id",
+        resolver = EntityIdResolver.class,
+        scope = Categories.class)
 @Entity
 @Table(name = "categories")
 public class Categories {

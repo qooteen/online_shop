@@ -18,16 +18,9 @@
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="/resources/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/resources/css/style.css">
-
-
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 </head>
-<body style="
-      padding-top: 0">
-
+<body style="padding-top: 0">
 <div class="container">
-
     <form id="ShopLogo" method="GET" action="/">
     </form>
     <h1>
@@ -56,98 +49,113 @@
                 <button type="button" class="btn btn-primary btn" onclick="document.forms['Registration'].submit()">Registration</button>
             </c:otherwise>
         </c:choose>
-
         <button type="button" class="btn btn-primary btn" onclick="document.forms['Cart'].submit()">Cart</button>
     </h4>
 </div>
 
 
-<form:form method="POST" modelAttribute="prod" class="form-signin" enctype="multipart/form-data" >
-    <h2 class="form-signin-heading">Update product</h2>
-    <spring:bind path="title">
+<form class="form-signin" id = "myform">
         <div>
-            <form:input type="text" path="title" id="title" name="title" class="form-control" placeholder="Title"
-                        autofocus="true"></form:input>
+            <h2 class="form-signin-heading">UPDATE ITEM N: ${prod.product_id}</h2>
+            <input type="text" id="title" name="title" class="form-control" placeholder="Title" value="${prod.title}"/>
         </div>
-
-    </spring:bind>
-
-    <spring:bind path="price">
         <div>
-            <form:input  type="text" id="price" name="price" path="price" class="form-control" placeholder="Price"></form:input>
+            <input type="number" min="1" id="price" name="price" class="form-control" placeholder="Price" value="${prod.price}"/>
         </div>
-    </spring:bind>
-
-    <spring:bind path="description">
         <div>
-            <form:input  type="text" id="description" name="description" path="description" class="form-control" placeholder="Description"></form:input>
+            <input  type="text" id="description" name="description" class="form-control" placeholder="Description" value="${prod.description}"/>
         </div>
-    </spring:bind>
-
-    <spring:bind path="short_description">
         <div>
-            <form:input type="text" id="short_description" name="short_description" path="short_description" class="form-control" placeholder="Short description"></form:input>
+            <input type="text" id="short_description" name="short_description" class="form-control" placeholder="Short description" value="${prod.short_description}"/>
         </div>
-    </spring:bind>
-
-    <spring:bind path="quantity">
         <div>
-            <form:input type="number" id="quantity" min="1" name="quantity" path="quantity" class="form-control" placeholder="Quantity"></form:input>
+            <input type="number" id="quantity" min="1" name="quantity" class="form-control" placeholder="Quantity" value="${prod.quantity}"/>
         </div>
-    </spring:bind>
-
-    <spring:bind path="accessible">
         <div>
-            <p>Accessible <form:checkbox id="accessible" name="accessible" path="accessible"  placeholder="Accessible"></form:checkbox></p>
+            <p>Accessible <input type = "checkbox" id="accessible" name="accessible" placeholder="Accessible" value="${prod.accessible}" checked/></p>
         </div>
-    </spring:bind>
-
     <div>
-        <p>Categories <form:select class="form-control" path="categories" items="${map}"/></p>
+        <p>Categories<select required class="form-control" multiple="multiple" id="categories" name="name[]">
+            <option disabled>Select Categories</option>
+            <c:forEach items="${categories}" var="category">
+                <option value="${category.category_id}">${category.logo}</option>
+            </c:forEach>
+        </select></p>
     </div>
     <div>
-        <p>Manufacture <form:select class="form-control" path="manufacturer_id" items="${map2}"/></p>
+        <p>Manufacture<select class="form-control"  id="manufacturer" >
+            <option disabled>Select Manufacture</option>
+            <c:forEach items="${manufacturers}" var="man">
+                <option value="${man.manufacturer_id}">${man.logo}</option>
+            </c:forEach>
+        </select></p>
     </div>
-
     <div class="form-group">
-        <form:input type="file" name="file"  id="file" path="upload"  class="form-control-file" ></form:input>
+        <input type="file" name="file" accept=".jpg, .jpeg, .png" id="file" onchange="previewFile()" class="form-control-file"/>
+        <img src="" id="image" height="200" alt="Image preview...">
     </div>
-    <button class="btn btn-lg btn-primary btn-block" onclick="postDataFromAPI();" type="submit">Submit</button>
-</form:form>
-</div>
+<input type="submit" id="btn" class="btn btn-lg btn-primary btn-block"/>
+</form>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}resources/js/bootstrap.min.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
 
-<script type="application/javascript">
+<script>
+    function previewFile() {
+        var preview = document.querySelector('img');
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader  = new FileReader();
 
-    function postDataFromAPI() {
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        };
 
-        var modelObj = {
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }
+
+        $("#myform").submit(function(e) {
+            e.preventDefault();
+            var isChecked = $("#accessible:checkbox").is(":checked") ? true:false;
+            var p = document.querySelector('img');
+            var s = document.getElementById("manufacturer");
+            var f = p.src;
+            var a = document.getElementById("categories");
+            var ar = a.selectedOptions;
+            var res = [];
+            for (var i = 0; i < ar.length; i++) {
+                res[i] = ar[i].value;
+            }
+            if (p.src.indexOf("data") == -1) f = null;
+            var modelObj = {
             title: $("#title").val(),
             price: $("#price").val(),
             description: $("#description").val(),
             short_description: $("#short_description").val(),
-            accessible: $("#accessible:checkbox:checked").val(),
-            quantity: $("#quantity").val()
+            accessible: isChecked,
+            quantity: $("#quantity").val(),
+            image : f,
+            manufacturer: s.value,
+            categories: res
         };
-
-        console.log("post data:"+modelObj);
-
         $.ajax({
             type: "POST",
             url: "/update/${prod.product_id}",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json;charset=UTF-8"
             },
             data: JSON.stringify(modelObj),
+
             success: function (data) {
                 console.log("POST API RESPONSE::"+data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
             }
         });
-    }
+        });
 </script>
 </body>
 </html>
