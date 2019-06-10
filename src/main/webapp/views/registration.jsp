@@ -15,9 +15,9 @@
 
     <title>Create an account</title>
 
-    <link href="${contextPath}resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}resources/css/common.css" rel="stylesheet">
-    <link rel="stylesheet" href="${contextPath}resources/css/style.css">
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/common.css" rel="stylesheet">
+    <link rel="stylesheet" href="/resources/css/style.css">
 
 
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -62,7 +62,7 @@
         <spring:bind path="password2">
             <label for="3">Confirm Password</label>
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="password2" id="3" path="password2" class="form-control"
+                <form:input type="password" id="3" path="password2" class="form-control"
                             placeholder="Confirm your password"></form:input>
                 <form:errors path="password2"></form:errors>
             </div>

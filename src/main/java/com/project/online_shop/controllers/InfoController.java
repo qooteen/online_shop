@@ -5,6 +5,7 @@ import com.project.online_shop.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -14,8 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.management.relation.Role;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class InfoController {
@@ -74,6 +78,14 @@ public class InfoController {
     public String infoPage(Model model) {
         UserDetails userDetail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Users user = usersService.findByUsername(userDetail.getUsername());
+        Collection<? extends GrantedAuthority> authorities
+                = userDetail.getAuthorities();
+        for (GrantedAuthority authority: authorities)
+        if (authority.getAuthority().equals("ROLE_ADMIN")) {
+            model.addAttribute("orders", ordersService.findAll());
+            return "history";
+        }
+
         List<Orders> orders = ordersService.findAllByUser(user);
         model.addAttribute("orders", orders);
         return "history";

@@ -61,7 +61,7 @@
         </c:when>
         <c:otherwise>
             <button type="button" class="btn btn-primary btn" onclick="document.forms['ContinueBuy'].submit()">Continue Buy</button>
-            <p class="title">Total price:<p class="product-price"> ${total}</p></p>
+            <p class="title">Total price:<p class="product-price"> ${total} Rub</p></p>
         <form id="ContinueBuy" method="POST" action="/cart">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
@@ -85,12 +85,12 @@
 
                             <p class="product-title"><strong>${item.products.title}</strong></p>
                             <p class="product-desc">${item.products.short_description}</p>
-                            <p class="product-price">${item.products.price}</p>
+                            <p class="product-price">${item.products.price} Rub</p>
                             <form action="/cart/update/${item.products.product_id}" method="POST">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                 <p>Quantity: <input type="number" min="1" max="${item.products.quantity}" name="quantity" value="${item.quantity}"></p>
                             </form>
-                            <p class="product-price">${item.products.price * item.quantity}</p>
+                            <p class="product-price">${item.products.price * item.quantity} Rub</p>
                         </div>
                     </div>
                 </c:forEach>

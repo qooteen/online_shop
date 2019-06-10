@@ -57,22 +57,22 @@
 <form class="form-signin" id = "myform">
         <div>
             <h2 class="form-signin-heading">UPDATE ITEM N: ${prod.product_id}</h2>
-            <input type="text" id="title" name="title" class="form-control" placeholder="Title" value="${prod.title}"/>
+            <input type="text" id="title" name="title" class="form-control" placeholder="Title"  required  value="${prod.title}"/>
         </div>
         <div>
-            <input type="number" min="1" id="price" name="price" class="form-control" placeholder="Price" value="${prod.price}"/>
+            <input type="number" min="1" id="price" name="price" class="form-control" placeholder="Price" required value="${prod.price}"/>
         </div>
         <div>
-            <input  type="text" id="description" name="description" class="form-control" placeholder="Description" value="${prod.description}"/>
+            <input  type="text" required id="description" name="description" class="form-control" placeholder="Description" value="${prod.description}"/>
         </div>
         <div>
-            <input type="text" id="short_description" name="short_description" class="form-control" placeholder="Short description" value="${prod.short_description}"/>
+            <input type="text" required id="short_description" name="short_description" class="form-control" placeholder="Short description" value="${prod.short_description}"/>
         </div>
         <div>
-            <input type="number" id="quantity" min="1" name="quantity" class="form-control" placeholder="Quantity" value="${prod.quantity}"/>
+            <input type="number" required id="quantity" min="1" name="quantity" class="form-control" placeholder="Quantity" value="${prod.quantity}"/>
         </div>
         <div>
-            <p>Accessible <input type = "checkbox" id="accessible" name="accessible" placeholder="Accessible" value="${prod.accessible}" checked/></p>
+            <p>Accessible <input required type = "checkbox" id="accessible" name="accessible" placeholder="Accessible" value="${prod.accessible}" checked/></p>
         </div>
     <div>
         <p>Categories<select required class="form-control" multiple="multiple" id="categories" name="name[]">
@@ -83,7 +83,7 @@
         </select></p>
     </div>
     <div>
-        <p>Manufacture<select class="form-control"  id="manufacturer" >
+        <p>Manufacture<select required class="form-control"  id="manufacturer" >
             <option disabled>Select Manufacture</option>
             <c:forEach items="${manufacturers}" var="man">
                 <option value="${man.manufacturer_id}">${man.logo}</option>

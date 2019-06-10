@@ -84,7 +84,7 @@
                                 <p class="product-title"><strong>${prod.title}</strong></p>
                                 <p class="product-desc">${prod.short_description}</p>
                                 <c:if test="${prod.quantity > 0 && prod.accessible}">
-                                    <p class="product-price">${prod.price}</p>
+                                    <p class="product-price">${prod.price} Rub</p>
                                     <p class="product-add"><a href="/cart/buy/${prod.product_id}">Buy Now</a></p>
 
                                 </c:if>

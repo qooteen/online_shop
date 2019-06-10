@@ -65,6 +65,11 @@
             <th scope="col">Short Description</th>
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
+            <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
+                <th scope="col">UserName</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+            </c:if>
         </tr>
         </thead>
         <tbody>
@@ -74,6 +79,11 @@
             <td>${prod_buy.short_description}</td>
             <td>${prod_buy.price}</td>
             <td>${prod_buy.quantity}</td>
+            <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
+                <td>${prod_buy.order_id.user.username}</td>
+                <td>${prod_buy.order_id.user.firstname}</td>
+                <td>${prod_buy.order_id.user.lastname}</td>
+            </c:if>
         </tr>
         </c:forEach>
         </tbody>

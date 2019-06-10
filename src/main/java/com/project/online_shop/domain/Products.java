@@ -15,7 +15,7 @@ public class Products {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long product_id;
 
-    @Column(name = "title", length = 50)
+    @Column(name = "title")
     private String title;
 
     @Column(name = "description")
@@ -24,7 +24,7 @@ public class Products {
     @Column(name = "price")
     private Integer price;
 
-    @Column(name = "image", length = 50)
+    @Column(name = "image")
     private String image;
 
     @Column(name = "quantity")
