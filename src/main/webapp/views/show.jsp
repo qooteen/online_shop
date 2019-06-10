@@ -16,24 +16,65 @@
     <link rel="stylesheet" href="/resources/css/style.css">
     <link rel="stylesheet" href="/resources/css/close.css">
 
-
 </head>
-<body>
-<div id="welcome"></div>
-
+<body style="padding-top: 0">
+<div class="container content">
+    <form id="ShopLogo" method="GET" action="/">
+    </form>
+    <h1>
+        <a onclick="document.forms['ShopLogo'].submit()">Market Place</a>
+    </h1>
+    <h4>
+        <c:choose>
+            <c:when test="${pageContext.request.userPrincipal.name!= null}">
+                <form id="logoutForm" method="POST" action="/logout">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                <form id="helloForm" method="GET" action="/info">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
+                    <form id="adminForm" method="GET" action="/admin">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <button type="button" class="btn btn-primary btn" onclick="document.forms['adminForm'].submit()">Add New Item</button>
+                </c:if>
+                <button type="button" class="btn btn-primary btn" onclick="document.forms['helloForm'].submit()"> Hello ${pageContext.request.userPrincipal.name}</button>
+                <button type="button" class="btn btn-primary btn" onclick="document.forms['logoutForm'].submit()">Logout</button>
+            </c:when>
+            <c:otherwise>
+                <button type="button" class="btn btn-primary btn" onclick="document.forms['SignIn'].submit()">Sign In</button>
+                <button type="button" class="btn btn-primary btn" onclick="document.forms['Registration'].submit()">Registration</button>
+            </c:otherwise>
+        </c:choose>
+        <button type="button" class="btn btn-primary btn" onclick="document.forms['Cart'].submit()">Cart</button>
+    </h4>
+</div>
+<div class="container content">
+<form class="form-signin">
+</form>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
-<script>
-    window.addEventListener("load",function() {
-        var request = new XMLHttpRequest();
-        request.open('GET','show/106',true);
-        request.addEventListener('readystatechange', function() {
-            if ((request.readyState==4) && (request.status==200)) {
-                var welcome = document.getElementById('welcome');
-                welcome.innerHTML = request.responseText;
-            }
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        $.get("http://localhost:8080/show/${id}", function(data) {
+
+                $(".form-signin").append(
+                "<div class=\u0022product3\u0022><img src=\u0022\n\u002F\nresources\u002F\nimg\u002F" + data.image + "\u0022><div>"+
+                    "<p class=\u0022product-title\u0022><strong>" + data.title + "</strong></p>" +
+                    "<p class=\u0022product-desc\u0022>" + data.short_description + "</p>" +
+                    "<p class=\u0022product-price\u0022>" + data.price + " rub" +"</p>" +
+                    "<p class=\u0022product-add\u0022><a href=\u0022\u002Fcart\u002Fbuy\u002F" + data.product_id  + "\u0022>Buy Now</a>" + "</p>" +
+                    "<p class=\u0022product-desc\u0022><strong>" + "Manufacturer:" + "</strong></p>" +
+                    "<p class=\u0022product-desc\u0022>" + data.manufacturer.logo + "</p>" +
+                    "<p class=\u0022product-desc\u0022>" + data.manufacturer.site + "</p>" +
+                    "<p class=\u0022product-desc\u0022><strong>" +" Description:"+ "</strong></p>" +
+                    "<p class=\u0022product-desc\u0022>" + data.description + "</p>"
+                );
         });
-        request.send();
     });
 </script>
 </body>

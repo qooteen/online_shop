@@ -12,31 +12,31 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Welcome</title>
+    <title>History</title>
 
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/resources/css/style.css">
 </head>
 <body>
 <div class="container">
-    <form id="SignIn" method="GET" action="${contextPath}login"></form>
-    <form id="Registration" method="GET" action="${contextPath}registration"></form>
-    <form id="Cart" method="GET" action="${contextPath}cart"></form>
-    <form id="ShopLogo" method="GET" action="${contextPath}/"></form>
+    <form id="SignIn" method="GET" action="/login"></form>
+    <form id="Registration" method="GET" action="/registration"></form>
+    <form id="Cart" method="GET" action="/cart"></form>
+    <form id="ShopLogo" method="GET" action="/"></form>
     <h1>
         <a onclick="document.forms['ShopLogo'].submit()">Market Place</a>
     </h1>
     <h4>
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name!= null}">
-                <form id="logoutForm" method="POST" action="${contextPath}logout">
+                <form id="logoutForm" method="POST" action="/logout">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
-                <form id="helloForm" method="GET" action="${contextPath}/info">
+                <form id="helloForm" method="GET" action="/info">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
                 <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
-                    <form id="adminForm" method="GET" action="${contextPath}/admin">
+                    <form id="adminForm" method="GET" action="/admin">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </form>
                     <button type="button" class="btn btn-primary btn" onclick="document.forms['adminForm'].submit()">Add New Item</button>

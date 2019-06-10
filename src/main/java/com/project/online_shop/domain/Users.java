@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.Set;
 
@@ -21,6 +23,10 @@ public class Users {
     @Column(name = "password")
     private String password;
 
+    @Transient
+    private String password2;
+
+    @Email
     @Column(name = "email", length = 50)
     private String email;
 
@@ -46,9 +52,8 @@ public class Users {
     @JoinColumn(name = "discount_id")
     private Discounts discount_id;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "birthday")
-    private Date birthday;
+    private String birthday;
 
     @Column(name = "active")
     private Boolean active;
@@ -58,6 +63,14 @@ public class Users {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Roles> roles;
+
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
 
     public Long getUser_id() {
         return user_id;
@@ -139,11 +152,11 @@ public class Users {
         this.discount_id = discount_id;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

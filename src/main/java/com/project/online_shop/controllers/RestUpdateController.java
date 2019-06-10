@@ -52,10 +52,10 @@ public class RestUpdateController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @RequestMapping (value = {"show/{id}"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, method = RequestMethod.GET)
-    public ResponseEntity<Object> shower(@PathVariable("id") Long id) {
+    @RequestMapping (value = {"/show/{id}"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<Products> shower(@PathVariable("id") Long id) {
         Products product = productsService.getProductById(id);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<Products>(product, HttpStatus.OK);
     }
 
     private String convertToImage(String base64) {

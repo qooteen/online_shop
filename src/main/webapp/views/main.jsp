@@ -31,14 +31,14 @@
             <h4>
                 <c:choose>
                     <c:when test="${pageContext.request.userPrincipal.name!= null}">
-                        <form id="logoutForm" method="POST" action="${contextPath}logout">
+                        <form id="logoutForm" method="POST" action="/logout">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form>
-                        <form id="helloForm" method="GET" action="${contextPath}/info">
+                        <form id="helloForm" method="GET" action="/info">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form>
                         <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
-                            <form id="adminForm" method="GET" action="${contextPath}/admin">
+                            <form id="adminForm" method="GET" action="/admin">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
                             <button type="button" class="btn btn-primary btn" onclick="document.forms['adminForm'].submit()">Add New Item</button>
@@ -76,7 +76,7 @@
                                     </form>
                                 </c:if>
                                 <div class="product-img">
-                                    <form id="Img${prod.product_id}" method="GET" action="/show/${prod.product_id}">
+                                    <form id="Img${prod.product_id}" method="GET" action="/view/${prod.product_id}">
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                         <a onclick="document.forms['Img${prod.product_id}'].submit()"><img src="/resources/img/${prod.image}"></a>
                                     </form>

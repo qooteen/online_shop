@@ -1,17 +1,33 @@
 package com.project.online_shop.controllers;
 
+import com.project.online_shop.config.ControllerUtils;
 import com.project.online_shop.domain.Users;
 import com.project.online_shop.service.UsersService;
+import com.project.online_shop.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import javax.validation.Valid;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
 
     private UsersService usersService;
+    private UserValidator userValidator;
+
+    @Autowired
+    public void setUserValidator(UserValidator userValidator) {
+        this.userValidator = userValidator;
+    }
 
     @Autowired
     public void setUsersService(UsersService usersService) {
@@ -25,16 +41,16 @@ public class RegistrationController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String registration(@ModelAttribute Users userForm, Model model) {
-        Users users = usersService.findByUsername(userForm.getUsername());
-        if (users == null) {
+    public String registration(@ModelAttribute("userForm") @Validated Users userForm, BindingResult bindingResult) {
 
-            usersService.saveUser(userForm);
-            return "redirect:/login";
+        userValidator.validate(userForm, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
         }
-        model.addAttribute("error", "Already exists");
-        model.addAttribute("userForm", userForm);
 
-        return "registration";
+        usersService.saveUser(userForm);
+
+        return "redirect:/login";
     }
 }
