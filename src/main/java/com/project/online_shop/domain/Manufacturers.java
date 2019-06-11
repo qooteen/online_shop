@@ -2,7 +2,6 @@ package com.project.online_shop.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.project.online_shop.service.EntityIdResolver;
 import javax.persistence.*;
