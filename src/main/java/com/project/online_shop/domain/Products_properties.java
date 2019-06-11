@@ -1,7 +1,17 @@
 package com.project.online_shop.domain;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.project.online_shop.service.EntityIdResolver;
 
+import javax.persistence.*;
+import java.util.Set;
+
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "products_property_id",
+        resolver = EntityIdResolver.class,
+        scope = Products_properties.class)
 @Entity
 @Table(name = "products_properties")
 public class Products_properties {
@@ -10,17 +20,24 @@ public class Products_properties {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long products_property_id;
 
-    @Column(name = "title", length = 50)
-    private String title;
+    @Column(name = "size", length = 50)
+    private String size;
 
-    @Column(name = "value", length = 50)
-    private String value;
+    @Column(name = "size_value")
+    private Integer size_value;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
-    private Products product_id;
+    @OneToMany(mappedBy = "property", cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private Set<Products> products;
 
     public Products_properties() {
+    }
+
+    public Set<Products> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Products> products) {
+        this.products = products;
     }
 
     public Long getProducts_property_id() {
@@ -31,37 +48,28 @@ public class Products_properties {
         this.products_property_id = products_property_id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getSize() {
+        return size;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setSize(String size) {
+        this.size = size;
     }
 
-    public String getValue() {
-        return value;
+    public Integer getSize_value() {
+        return size_value;
     }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public Products getProduct_id() {
-        return product_id;
-    }
-
-    public void setProduct_id(Products product_id) {
-        this.product_id = product_id;
+    public void setSize_value(Integer size_value) {
+        this.size_value = size_value;
     }
 
     @Override
     public String toString() {
         return "Products_properties{" +
                 "products_property_id=" + products_property_id +
-                ", title='" + title + '\'' +
-                ", value='" + value + '\'' +
-                ", product_id=" + product_id +
+                ", size='" + size + '\'' +
+                ", size_value=" + size_value +
                 '}';
     }
 }

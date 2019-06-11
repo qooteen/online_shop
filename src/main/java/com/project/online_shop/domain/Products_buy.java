@@ -22,6 +22,12 @@ public class Products_buy {
     @Column(name = "short_description")
     private String short_description;
 
+    @Column(name = "size")
+    private String size;
+
+    @Column(name = "size_value")
+    private Integer size_value;
+
     @Column(name = "price")
     private Integer price;
 
@@ -99,6 +105,22 @@ public class Products_buy {
         this.price = price;
     }
 
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public Integer getSize_value() {
+        return size_value;
+    }
+
+    public void setSize_value(Integer size_value) {
+        this.size_value = size_value;
+    }
+
     @Override
     public String toString() {
         return "Products_buy{" +
@@ -107,6 +129,8 @@ public class Products_buy {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", short_description='" + short_description + '\'' +
+                ", size='" + size + '\'' +
+                ", size_value=" + size_value +
                 ", price=" + price +
                 ", order_id=" + order_id +
                 ", quantity=" + quantity +

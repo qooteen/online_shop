@@ -72,8 +72,17 @@ public class UsersServiceImpl implements UsersService{
         return usersRepository.findByUsername(username);
     }
 
+    @Override
+    public Users findByEmail(String email) {
+        return usersRepository.findByEmail(email);
+    }
 
-//    @Override
+    @Override
+    public Users findByPhone(String phone) {
+        return usersRepository.findByPhone(phone);
+    }
+
+    //    @Override
 //    public Users findByUsername (String username) {
 //        return usersDao.findByUsername(username);
 //    }

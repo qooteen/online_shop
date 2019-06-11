@@ -67,6 +67,8 @@
                     "<p class=\u0022product-title\u0022><strong>" + data.title + "</strong></p>" +
                     "<p class=\u0022product-desc\u0022>" + data.short_description + "</p>" +
                     "<p class=\u0022product-price\u0022>" + data.price + " rub" +"</p>" +
+                    "<p class=\u0022product-desc\u0022><strong>" + "Size:" + "</strong></p>" +
+                    "<p class=\u0022product-desc\u0022>" + data.property.size_value + "</p>" +
                     "<p class=\u0022product-add\u0022><a href=\u0022\u002Fcart\u002Fbuy\u002F" + data.product_id  + "\u0022>Buy Now</a>" + "</p>" +
                     "<p class=\u0022product-desc\u0022><strong>" + "Manufacturer:" + "</strong></p>" +
                     "<p class=\u0022product-desc\u0022>" + data.manufacturer.logo + "</p>" +

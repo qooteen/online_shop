@@ -63,6 +63,7 @@
 
 <form:form method="POST" modelAttribute="product" class="form-signin" enctype="multipart/form-data" action="/admin">
     <h2 class="form-signin-heading">Add product</h2>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <spring:bind path="title">
         <div class="form-group ${status.error ? 'has-error' : ''}">
             <form:input type="text" path="title" class="form-control" placeholder="Title"
@@ -111,7 +112,11 @@
         <p>Manufacture <form:select  class="form-control" path="manufacturer" items="${map2}"/>
         </p>
     </div>
-    <div class="form-group">
+    <div>
+        <p>Size <form:select  class="form-control" path="property" items="${map3}"/>
+        </p>
+    </div>
+    <div class="form-group ${status.error ? 'has-error' : ''}">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <form:input  type="file" id="upp" name="upp" accept=".jpg, .jpeg, .png" onchange="previewFile()" path="upload" class="form-control-file" ></form:input>
         <form:errors path="upload"></form:errors>

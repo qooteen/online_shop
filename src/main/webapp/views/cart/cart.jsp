@@ -85,6 +85,7 @@
 
                             <p class="product-title"><strong>${item.products.title}</strong></p>
                             <p class="product-desc">${item.products.short_description}</p>
+                            <p class="product-desc">${item.products.property.size}</p>
                             <p class="product-price">${item.products.price} Rub</p>
                             <form action="/cart/update/${item.products.product_id}" method="POST">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

@@ -25,4 +25,8 @@ public interface UsersService {
     List<Users> findAll();
 
     Users findByUsername(String username);
+
+    Users findByEmail(String email);
+
+    Users findByPhone(String phone);
 }

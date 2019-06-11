@@ -71,8 +71,9 @@
         <div>
             <input type="number" required id="quantity" min="1" name="quantity" class="form-control" placeholder="Quantity" value="${prod.quantity}"/>
         </div>
+
         <div>
-            <p>Accessible <input required type = "checkbox" id="accessible" name="accessible" placeholder="Accessible" value="${prod.accessible}" checked/></p>
+            <p>Accessible <input type = "checkbox" id="accessible" name="accessible" placeholder="Accessible" value="${prod.accessible}" checked/></p>
         </div>
     <div>
         <p>Categories<select required class="form-control" multiple="multiple" id="categories" name="name[]">
@@ -82,11 +83,21 @@
             </c:forEach>
         </select></p>
     </div>
+
     <div>
         <p>Manufacture<select required class="form-control"  id="manufacturer" >
             <option disabled>Select Manufacture</option>
             <c:forEach items="${manufacturers}" var="man">
                 <option value="${man.manufacturer_id}">${man.logo}</option>
+            </c:forEach>
+        </select></p>
+    </div>
+
+    <div>
+        <p>Size<select required class="form-control"  id="proper" >
+            <option disabled>Select Size</option>
+            <c:forEach items="${properties}" var="property">
+                <option value="${property.products_property_id}">${property.size}</option>
             </c:forEach>
         </select></p>
     </div>
@@ -124,6 +135,7 @@
             var s = document.getElementById("manufacturer");
             var f = p.src;
             var a = document.getElementById("categories");
+            var prop = document.getElementById("proper");
             var ar = a.selectedOptions;
             var res = [];
             for (var i = 0; i < ar.length; i++) {
@@ -139,7 +151,8 @@
             quantity: $("#quantity").val(),
             image : f,
             manufacturer: s.value,
-            categories: res
+            categories: res,
+            property: prop.value
         };
         $.ajax({
             type: "POST",

@@ -141,6 +141,8 @@ public class CartController {
                 products_buy.setDescription(item.getProducts().getDescription());
                 products_buy.setTitle(item.getProducts().getTitle());
                 products_buy.setShort_description(item.getProducts().getShort_description());
+                products_buy.setSize(item.getProducts().getProperty().getSize());
+                products_buy.setSize_value(item.getProducts().getProperty().getSize_value());
                 products_buy.setOrder_id(orders);
                 products_buy.setQuantity(item.getQuantity());
                 products_buyService.saveProducts_buy(products_buy);

@@ -64,6 +64,8 @@
             <th scope="col">Title</th>
             <th scope="col">Short Description</th>
             <th scope="col">Price</th>
+            <th scope="col">Size</th>
+            <th scope="col">Size value</th>
             <th scope="col">Quantity</th>
             <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
                 <th scope="col">UserName</th>
@@ -78,6 +80,8 @@
             <td>${prod_buy.title}</td>
             <td>${prod_buy.short_description}</td>
             <td>${prod_buy.price}</td>
+            <td>${prod_buy.size}</td>
+            <td>${prod_buy.size_value}</td>
             <td>${prod_buy.quantity}</td>
             <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
                 <td>${prod_buy.order_id.user.username}</td>

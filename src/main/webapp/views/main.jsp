@@ -83,6 +83,7 @@
                                 </div>
                                 <p class="product-title"><strong>${prod.title}</strong></p>
                                 <p class="product-desc">${prod.short_description}</p>
+                                <p class="product-desc">${prod.property.size}</p>
                                 <c:if test="${prod.quantity > 0 && prod.accessible}">
                                     <p class="product-price">${prod.price} Rub</p>
                                     <p class="product-add"><a href="/cart/buy/${prod.product_id}">Buy Now</a></p>

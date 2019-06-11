@@ -52,8 +52,9 @@ public class Products {
     @Column(name = "accessible")
     private Boolean accessible;
 
-    @OneToMany(mappedBy = "product_id", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private Set<Products_properties> productsProperties;
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "products_property_id")
+    private Products_properties property;
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "products_categories", joinColumns = @JoinColumn(name = "product_id"),
@@ -69,15 +70,15 @@ public class Products {
         this.categories = categories;
     }
 
-    public Set<Products_properties> getProductsProperties() {
-        return productsProperties;
-    }
-
-    public void setProductsProperties(Set<Products_properties> productsProperties) {
-        this.productsProperties = productsProperties;
-    }
-
     public Products() {
+    }
+
+    public Products_properties getProperty() {
+        return property;
+    }
+
+    public void setProperty(Products_properties property) {
+        this.property = property;
     }
 
     public Long getProduct_id() {
@@ -164,6 +165,7 @@ public class Products {
                 ", manufacturer=" + manufacturer +
                 ", short_description='" + short_description + '\'' +
                 ", accessible=" + accessible +
+                ", property=" + property +
                 '}';
     }
 }

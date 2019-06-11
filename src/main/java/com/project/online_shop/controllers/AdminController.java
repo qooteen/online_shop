@@ -3,9 +3,11 @@ package com.project.online_shop.controllers;
 import com.project.online_shop.domain.Categories;
 import com.project.online_shop.domain.Manufacturers;
 import com.project.online_shop.domain.Products;
+import com.project.online_shop.domain.Products_properties;
 import com.project.online_shop.service.CategoryService;
 import com.project.online_shop.service.ManufacturersService;
 import com.project.online_shop.service.ProductsService;
+import com.project.online_shop.service.Products_propertiesService;
 import com.project.online_shop.validator.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,9 +40,16 @@ public class AdminController {
 
     private ProductsService productsService;
 
+    private Products_propertiesService products_propertiesService;
+
     private CategoryService categoryService;
 
     private ManufacturersService manufacturersService;
+
+    @Autowired
+    public void setProducts_propertiesService(Products_propertiesService products_propertiesService) {
+        this.products_propertiesService = products_propertiesService;
+    }
 
     @Autowired
     public void setManufacturersService(ManufacturersService manufacturersService) {
@@ -73,8 +82,15 @@ public class AdminController {
         for (Manufacturers manufacturers : manufacturersList)
             map2.put(manufacturers.getManufacturer_id(), manufacturers.getLogo());
 
+        Map<Long, String> map3 = new HashMap<>();
+
+        List<Products_properties> productsProperties = products_propertiesService.findAll();
+        for (Products_properties products_properties : productsProperties)
+            map3.put(products_properties.getProducts_property_id(), products_properties.getSize());
+
         model.addAttribute("map", map);
         model.addAttribute("map2", map2);
+        model.addAttribute("map3", map3);
 
         return "admin";
     }
@@ -96,9 +112,17 @@ public class AdminController {
         for (Manufacturers manufacturers : manufacturersList)
             map2.put(manufacturers.getManufacturer_id(), manufacturers.getLogo());
 
+        Map<Long, String> map3 = new HashMap<>();
+
+        List<Products_properties> productsProperties = products_propertiesService.findAll();
+        for (Products_properties products_properties : productsProperties)
+            map3.put(products_properties.getProducts_property_id(), products_properties.getSize());
+
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("map", map);
             model.addAttribute("map2", map2);
+            model.addAttribute("map3", map3);
             return "admin";
         }
 

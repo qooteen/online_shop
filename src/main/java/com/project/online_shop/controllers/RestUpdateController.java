@@ -37,6 +37,7 @@ public class RestUpdateController {
         }
         products.setCategories(data.getCategories());
         products.setManufacturer(data.getManufacturer());
+        products.setProperty(data.getProperty());
         products.setTitle(data.getTitle());
         products.setAccessible(data.getAccessible());
         products.setPrice(data.getPrice());

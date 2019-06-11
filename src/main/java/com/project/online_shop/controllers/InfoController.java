@@ -27,12 +27,17 @@ public class InfoController {
     private ProductsService productsService;
     private ManufacturersService manufacturersService;
     private CategoryService categoryService;
-
+    private Products_propertiesService products_propertiesService;
 
     private UsersService usersService;
 
 
     private OrdersService ordersService;
+
+    @Autowired
+    public void setProducts_propertiesService(Products_propertiesService products_propertiesService) {
+        this.products_propertiesService = products_propertiesService;
+    }
 
     @Autowired
     public void setUsersService(UsersService usersService) {
@@ -66,8 +71,10 @@ public class InfoController {
         map.put("prod", products);
         List<Categories> categoriesList = categoryService.findAll();
         List<Manufacturers> manufacturersList = manufacturersService.findAll();
+        List<Products_properties> products_propertiesList = products_propertiesService.findAll();
         map.put("categories", categoriesList);
         map.put("manufacturers", manufacturersList);
+        map.put("properties", products_propertiesList);
         return "update";
     }
 
